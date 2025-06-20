@@ -1,7 +1,8 @@
 import React from "react";
+
+import image1 from "../../../assets/live-tracking.png";
+import image2 from "../../../assets/safe-delivery.png";
 import BenefitCard from "./BenefitCard";
-import image1 from "../../assets/live-tracking.png";
-import image2 from "../../assets/safe-delivery.png";
 
 const Benefits = () => {
   const features = [
