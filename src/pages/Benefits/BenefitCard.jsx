@@ -4,7 +4,7 @@ const BenefitCard = ({ feature }) => {
   return (
     <div
       data-aos="fade-left"
-      data-aos-duration="3000"
+      data-aos-duration="4000"
       key={feature.id}
       className="flex flex-col md:flex-row bg-white shadow-md rounded-xl overflow-hidden"
     >
