@@ -3,6 +3,8 @@ import React from "react";
 const BenefitCard = ({ feature }) => {
   return (
     <div
+      data-aos="fade-left"
+      data-aos-duration="3000"
       key={feature.id}
       className="flex flex-col md:flex-row bg-white shadow-md rounded-xl overflow-hidden"
     >

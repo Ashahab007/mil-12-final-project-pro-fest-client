@@ -51,7 +51,8 @@ const servicesData = [
 
 const Services = () => {
   return (
-    <section className="py-16 px-4 md:px-10 bg-gray-50">
+    // 1.3 apply the data-aos="fade-up"
+    <section data-aos="fade-up" className="py-16 px-4 md:px-10 bg-gray-50">
       <div className="max-w-7xl mx-auto text-center mb-10">
         <h2 className="text-3xl text-primary font-bold mb-4">Our Services</h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
