@@ -1,14 +1,13 @@
 import React from "react";
 
 const BenefitCard = ({ feature }) => {
-  //   const { title, description } = feature;
   return (
     <div
       key={feature.id}
       className="flex flex-col md:flex-row bg-white shadow-md rounded-xl overflow-hidden"
     >
       {/* Left Image */}
-      <div className="md:w-[30%] w-full p-25 lg:p-30">
+      <div className="md:w-[30%] w-full p-8 lg:p-10">
         <img
           src={feature.image}
           alt={feature.title}
