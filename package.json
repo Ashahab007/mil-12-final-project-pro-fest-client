@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-awesome/components": "^1.0.24",
     "@tailwindcss/vite": "^4.1.10",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-responsive-carousel": "^3.2.23",
     "react-router": "^7.6.2",
     "tailwindcss": "^4.1.10"
   },
