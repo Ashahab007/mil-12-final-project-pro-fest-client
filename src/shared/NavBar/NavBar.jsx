@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router";
 import ProFast from "../ProFast/ProFast";
+import Logout from "../../pages/Authentication/Logout/Logout";
 
 const NavBar = () => {
   const navItems = (
@@ -47,7 +48,7 @@ const NavBar = () => {
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <Logout></Logout>
       </div>
     </div>
   );

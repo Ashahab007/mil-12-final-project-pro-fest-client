@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 // 3.1 created a login component
 const Login = () => {
@@ -43,6 +44,7 @@ const Login = () => {
           <button className="btn btn-neutral mt-4">Login</button>
         </fieldset>
       </form>
+      <SocialLogin></SocialLogin>
     </div>
   );
 };
