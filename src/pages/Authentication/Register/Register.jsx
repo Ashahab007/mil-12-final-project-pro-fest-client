@@ -40,7 +40,21 @@ const Register = () => {
             type="password"
             // 5.2.1 apply the password to get the password data
             // 6.5 apply length for password validation
-            {...register("password", { minLength: 6 })}
+            {...register("password", {
+              minLength: 6,
+              //   6.6 apply password pattern validation for but not working
+              validate: {
+                hasLowerCase: (value) =>
+                  /[a-z]/.test(value) ||
+                  "Password must contain at least one lowercase letter",
+                hasUpperCase: (value) =>
+                  /[A-Z]/.test(value) ||
+                  "Password must contain at least one uppercase letter",
+                hasNumber: (value) =>
+                  /\d/.test(value) ||
+                  "Password must contain at least one number",
+              },
+            })}
             className="input"
             placeholder="Password"
           />
@@ -50,6 +64,22 @@ const Register = () => {
               Password at least 6 characters or more
             </p>
           )}
+          {/* 6.7 showing error for password pattern validation error but not working */}
+
+          {errors.password && (
+            <div>
+              {errors.password?.hasLowerCase && (
+                <p className="text-red-500">{errors.password?.hasLowerCase}</p>
+              )}
+              {errors.password?.hasUpperCase && (
+                <p className="text-red-500">{errors.password?.hasUpperCase}</p>
+              )}
+              {errors.password?.hasNumber && (
+                <p className="text-red-500">{errors.password?.hasNumber}</p>
+              )}
+            </div>
+          )}
+
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
