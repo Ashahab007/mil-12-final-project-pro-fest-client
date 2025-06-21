@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  // 3.2 created a different route for authentication
+  // 3.2 created a different route for authentication because layout don't contains any NavBar and footer
   {
     path: "/",
     Component: AuthLayout,
