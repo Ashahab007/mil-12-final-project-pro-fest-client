@@ -3,8 +3,8 @@ import logo from "../../assets/logo.png";
 
 const ProFast = () => {
   return (
-    <div className="flex items-end gap-0">
-      <img className="ml-2" src={logo} alt="" srcset="" />
+    <div className="flex items-end">
+      <img className="ml-2" src={logo} />
       <p className="font-extrabold text-2xl -ml-2.5 ">Profast</p>
     </div>
   );
