@@ -7,6 +7,7 @@ import Aos from "aos";
 
 // 1.1 import css by copy from documentation
 import "aos/dist/aos.css";
+import AuthProvider from "./context/AuthContext/AuthProvider.jsx";
 
 // 1.0 My requirement is implement  animation on scroll. run "npm install aos --save" from https://github.com/michalsnik/aos
 
@@ -16,7 +17,10 @@ Aos.init({ delay: 1000 });
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <div className="font-urbanist">
-      <RouterProvider router={router} />
+      {/* 7.5 apply the <AuthProvider></AuthProvider> */}
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </div>
   </StrictMode>
 );

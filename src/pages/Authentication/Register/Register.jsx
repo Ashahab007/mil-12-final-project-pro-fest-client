@@ -1,6 +1,5 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { data } from "react-router";
 
 // 5.0 My requirement is applying react hook form in Register section
 // 6.0 My requirement is show error in the form if validation is failed
