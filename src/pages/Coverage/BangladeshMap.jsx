@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 // 10.2 create the component and by using ai
+// 10.5 get the services data
 const BangladeshMap = ({ services }) => {
   // 10.3 as the data found for one co-ordination. we need 64 district co-ordination which is in assest folder "warehouse.json". copy the data from "warehouse.json" and give it to ai to modify it for 64 district.
   const dhakaCoordinates = [23.8103, 90.4125]; // Centered on Dhaka
