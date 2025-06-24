@@ -2,9 +2,17 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
 // 11.0 Now my requirement is create a send parcel for user using react hook form
 
 const SendParcel = () => {
+  const generateTrackingID = () => {
+    const date = new Date();
+    const datePart = date.toISOString().split("T")[0].replace(/-/g, "");
+    const rand = Math.random().toString(36).substring(2, 7).toUpperCase();
+    return `PCL-${datePart}-${rand}`;
+  };
+
   const {
     register,
     handleSubmit,
@@ -35,7 +43,7 @@ const SendParcel = () => {
   // console.log(getDistrictsByRegion());
 
   // cost calculation
-  const calCulateCost = (type, weight, isSameDistrict) => {
+  /* const calCulateCost = (type, weight, isSameDistrict) => {
     if (type === "document") {
       return isSameDistrict ? 60 : 80;
     }
@@ -47,9 +55,9 @@ const SendParcel = () => {
     const extrKg = wt - 3;
     const extrCost = extrKg * 40;
     return isSameDistrict ? 110 + extrCost : 150 + extrCost + 40;
-  };
+  }; */
 
-  const onSubmit = (data) => {
+  /*  const onSubmit = (data) => {
     const isSameDistrict = data.senderCenter === data.receiverCenter;
     const cost = calCulateCost(
       data.parcelType,
@@ -59,6 +67,97 @@ const SendParcel = () => {
     setDeliveryCost(cost);
     toast.success(`Your Delivery Cost is ${cost}`);
     console.log(data);
+  }; */
+
+  const onSubmit = (data) => {
+    const isSameDistrict = data.senderCenter === data.receiverCenter;
+    const weight = parseFloat(data.parcelWeight || 0);
+    let breakdownHtml = "";
+    let cost = 0;
+
+    // === Cost Calculation & Breakdown ===
+    if (data.parcelType === "document") {
+      cost = isSameDistrict ? 60 : 80;
+      breakdownHtml = `
+        <div style="text-align: left">
+          <strong>Parcel Type:</strong> Document<br/>
+          <strong>Delivery:</strong> ${
+            isSameDistrict ? "Within District" : "Outside District"
+          }<br/>
+          <strong>Cost:</strong> ৳${cost}
+        </div>
+      `;
+    } else {
+      if (weight <= 3) {
+        cost = isSameDistrict ? 110 : 150;
+        breakdownHtml = `
+          <div style="text-align: left">
+            <strong>Parcel Type:</strong> Non-Document (≤3kg)<br/>
+            <strong>Delivery:</strong> ${
+              isSameDistrict ? "Within District" : "Outside District"
+            }<br/>
+            <strong>Base Cost:</strong> ৳${cost}
+          </div>
+        `;
+      } else {
+        const extraKg = weight - 3;
+        const extraCost = extraKg * 40;
+        cost = isSameDistrict ? 110 + extraCost : 150 + extraCost + 40;
+
+        breakdownHtml = `
+          <div style="text-align: left">
+            <strong>Parcel Type:</strong> Non-Document (>3kg)<br/>
+            <strong>Delivery:</strong> ${
+              isSameDistrict ? "Within District" : "Outside District"
+            }<br/>
+            <strong>Base Cost:</strong> ৳${isSameDistrict ? 110 : 150}<br/>
+            <strong>Extra Weight (${extraKg}kg):</strong> ৳${extraCost}<br/>
+            ${
+              !isSameDistrict
+                ? "<strong>Outside District Fee:</strong> ৳40<br/>"
+                : ""
+            }
+            <strong>Total:</strong> ৳${cost}
+          </div>
+        `;
+      }
+    }
+
+    // === Show SweetAlert Modal ===
+    Swal.fire({
+      title: "📦 Delivery Cost Breakdown",
+      html: breakdownHtml,
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonText: "✅ Ready for Payment",
+      cancelButtonText: "✏️ Continue Editing",
+      customClass: {
+        popup: "text-sm",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const creation_date = new Date().toISOString();
+        const delivery_status = "Pending";
+        const payment_status = "Unpaid";
+        const tracking_id = generateTrackingID();
+
+        const finalData = {
+          ...data,
+          totalCost: cost,
+          creation_date,
+          delivery_status,
+          payment_status,
+          tracking_id,
+        };
+
+        // Simulate saving
+        console.log("📦 Parcel Info Saved:", finalData);
+        toast.success("Parcel info confirmed & saved ✅");
+
+        // setConfirmed(true);
+        // reset();
+      }
+    });
   };
 
   return (
