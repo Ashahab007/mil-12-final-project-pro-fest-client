@@ -2,12 +2,16 @@ import React from "react";
 import { NavLink } from "react-router";
 import ProFast from "../ProFast/ProFast";
 import Logout from "../../pages/Authentication/Logout/Logout";
+import { Link } from "react-router";
 
 const NavBar = () => {
   const navItems = (
     <>
       <li>
         <NavLink to="/">Home</NavLink>
+      </li>
+      <li>
+        <NavLink to="/addParcel">Send Your Parcel</NavLink>
       </li>
       <li>
         <NavLink to="/coverage">Coverage</NavLink>
@@ -52,6 +56,9 @@ const NavBar = () => {
       </div>
       <div className="navbar-end">
         <Logout></Logout>
+        <Link to="/login">
+          <button className="btn">Log In</button>
+        </Link>
       </div>
     </div>
   );

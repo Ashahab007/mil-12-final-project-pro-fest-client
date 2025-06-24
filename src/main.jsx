@@ -8,6 +8,7 @@ import Aos from "aos";
 // 1.1 import css by copy from documentation
 import "aos/dist/aos.css";
 import AuthProvider from "./context/AuthContext/AuthProvider.jsx";
+import { Toaster } from "react-hot-toast";
 
 // 1.0 My requirement is implement  animation on scroll. run "npm install aos --save" from https://github.com/michalsnik/aos
 
@@ -20,6 +21,7 @@ createRoot(document.getElementById("root")).render(
       {/* 7.5 apply the <AuthProvider></AuthProvider> */}
       <AuthProvider>
         <RouterProvider router={router} />
+        <Toaster></Toaster>
       </AuthProvider>
     </div>
   </StrictMode>
