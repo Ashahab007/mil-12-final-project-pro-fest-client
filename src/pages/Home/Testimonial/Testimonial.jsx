@@ -1,12 +1,12 @@
 import React from "react";
 // 2.1 import following 2 css then "npm run dev"
-import "mdb-react-ui-kit/dist/css/mdb.min.css";
+// import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // 2.0 my requirement is implement user review testimonial. Here we used mdbootstrap Testimonials. first run "npm i mdb-react-ui-kit". then "npm i @fortawesome/fontawesome-free".
 
 // 2.3 import the Component
-import {
+/* import {
   MDBCard,
   MDBCardBody,
   MDBCarousel,
@@ -15,7 +15,7 @@ import {
   MDBContainer,
   MDBIcon,
   MDBRow,
-} from "mdb-react-ui-kit";
+} from "mdb-react-ui-kit"; */
 
 // 2.4 Note: <MDBCarouselInner> this shows error so if any testimonial contains <MDBCarouselInner> delete or comment that
 const Testimonial = () => {
