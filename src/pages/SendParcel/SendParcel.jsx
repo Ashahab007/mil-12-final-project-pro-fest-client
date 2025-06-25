@@ -3,9 +3,15 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/UseAuth/useAxiosSecure";
 // 11.0 Now my requirement is create a send parcel for user using react hook form
 
 const SendParcel = () => {
+  // 14.0 my requirement is save the data to the server using post method
+
+  // 14.1 call the hook
+  const axiosSecure = useAxiosSecure();
+
   const generateTrackingID = () => {
     const date = new Date();
     const datePart = date.toISOString().split("T")[0].replace(/-/g, "");
@@ -141,7 +147,7 @@ const SendParcel = () => {
         const payment_status = "Unpaid";
         const tracking_id = generateTrackingID();
 
-        const finalData = {
+        const parcelData = {
           ...data,
           totalCost: cost,
           creation_date,
@@ -150,8 +156,17 @@ const SendParcel = () => {
           tracking_id,
         };
 
+        // 14.2
+        axiosSecure.post("/parcels", parcelData).then((res) => {
+          console.log(res.data);
+          if (res.data.insertedId) {
+            // todo: redirect to the payment page using Swal.fire
+            // Swal.fire
+          }
+        });
+
         // Simulate saving
-        console.log("📦 Parcel Info Saved:", finalData);
+        console.log("📦 Parcel Info Saved:", parcelData);
         toast.success("Parcel info confirmed & saved ✅");
 
         // setConfirmed(true);

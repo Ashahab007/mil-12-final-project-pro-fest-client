@@ -3,8 +3,10 @@ import { NavLink } from "react-router";
 import ProFast from "../ProFast/ProFast";
 import Logout from "../../pages/Authentication/Logout/Logout";
 import { Link } from "react-router";
+import UseAuth from "../../hooks/UseAuth/UseAuth";
 
 const NavBar = () => {
+  const { user } = UseAuth();
   const navItems = (
     <>
       <li>
@@ -13,6 +15,13 @@ const NavBar = () => {
       <li>
         <NavLink to="/addParcel">Send Your Parcel</NavLink>
       </li>
+      {user && (
+        <>
+          <li>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+          </li>
+        </>
+      )}
       <li>
         <NavLink to="/coverage">Coverage</NavLink>
       </li>
