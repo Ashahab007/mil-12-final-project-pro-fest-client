@@ -56,9 +56,9 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      // <PrivateRoutes>
-      <DashBoardLayout></DashBoardLayout>
-      // </PrivateRoutes>
+      <PrivateRoutes>
+        <DashBoardLayout></DashBoardLayout>
+      </PrivateRoutes>
     ),
     // 15.5 set the children MyParcel
     children: [{ path: "myParcel", Component: MyParcel }],

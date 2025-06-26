@@ -1,9 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import UseAuth from "../../../hooks/UseAuth/UseAuth";
 
 // 3.1 created a login component
 const Login = () => {
+  // 19.1 get the login from UseAuth
+  const { logIn } = UseAuth();
   // 4.0 my requirement is implement react hook form
   // 4.1 npm install react-hook-form then from doc select js for every form
 
@@ -13,6 +16,15 @@ const Login = () => {
   //   4.4 call the onSubmit function form document
   const onSubmit = (data) => {
     console.log(data);
+    // 19.0 Implementing user login
+    // 19.2 get the email and password from data which is from react hook form
+    logIn(data.email, data.password)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">

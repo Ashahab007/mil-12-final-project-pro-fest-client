@@ -67,10 +67,14 @@ const NavBar = () => {
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        <Logout></Logout>
-        <Link to="/login">
-          <button className="btn">Log In</button>
-        </Link>
+        {/* 18.0 Implement logout */}
+        {user ? (
+          <Logout></Logout>
+        ) : (
+          <Link to="/login">
+            <button className="btn">Log In</button>
+          </Link>
+        )}
       </div>
     </div>
   );
