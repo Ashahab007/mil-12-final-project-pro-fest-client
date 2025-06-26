@@ -3,6 +3,7 @@ import React from "react";
 import UseAuth from "../../../hooks/UseAuth/UseAuth";
 import useAxiosSecure from "../../../hooks/UseAuth/useAxiosSecure";
 import { format } from "date-fns";
+import Swal from "sweetalert2";
 
 // 15.4 created a My Parcel component to show my parcel
 
@@ -14,8 +15,9 @@ const MyParcel = () => {
 
   const axiosSecure = useAxiosSecure();
 
-  // 16.4 use the useQuery from doc which takes some parameter by default like isPending, isError, data, error. here we will use data and set the value parcels by default is a empty array
-  const { data: parcels = [] } = useQuery({
+  // 16.4 use the useQuery from doc which takes some parameter by default like isPending, isError, data, error. here we will use data and set the value parcels by default is a empty array. then get the data from server using axiosSecure.
+  // 17.2 add refetch after parcel from tanstack query
+  const { data: parcels = [], refetch } = useQuery({
     queryKey: ["my-parcel", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/parcels?email=${user?.email}`);
@@ -33,10 +35,38 @@ const MyParcel = () => {
     console.log("View clicked:", parcel);
     // Open modal or navigate to detail page
   };
+  // 17.0 My requirement delete data using tanstack query and fetch the data using axiosSecure
+  const handleDelete = (id, parcelName) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Are you Sure want to delete "${parcelName}"? This action cannot be undone.`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete(`/parcels/${id}`)
+          .then((res) => {
+            console.log(res.data);
 
-  const handleDelete = (parcel) => {
-    console.log("Delete clicked:", parcel);
-    // Confirm and delete the parcel
+            if (res.data.deletedCount > 0) {
+              Swal.fire("Deleted!", "Parcel has been deleted.", "success");
+
+              // 17.3 call the refetch
+              refetch();
+              // setParcels(prev => prev.filter(p => p._id !== parcel._id));
+            } else {
+              Swal.fire("Failed", "Parcel could not be deleted.", "error");
+            }
+          })
+          .catch(() => {
+            Swal.fire("Error", "Something went wrong.", "error");
+          });
+      }
+    });
   };
 
   return (
@@ -90,7 +120,9 @@ const MyParcel = () => {
                     </button>
                     <button
                       className="btn btn-xs btn-outline btn-error"
-                      onClick={() => onDelete(parcel)}
+                      onClick={() =>
+                        handleDelete(parcel._id, parcel.parcelTitle)
+                      }
                     >
                       Delete
                     </button>

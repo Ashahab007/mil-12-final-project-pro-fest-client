@@ -1,5 +1,6 @@
 import React from "react";
-import { Outlet } from "react-router";
+import { NavLink, Outlet } from "react-router";
+import ProFast from "../shared/ProFast/ProFast";
 // 15.0  now my requirement is create a dashboard so created a DashBoardLayout
 
 const DashBoardLayout = () => {
@@ -43,12 +44,12 @@ const DashBoardLayout = () => {
           className="drawer-overlay"
         ></label>
         <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-          {/* Sidebar content here */}
+          <ProFast></ProFast>
           <li>
-            <a>Sidebar Item 1</a>
+            <NavLink to="/">Home</NavLink>
           </li>
           <li>
-            <a>Sidebar Item 2</a>
+            <NavLink to="/dashboard/myParcel">My Parcels</NavLink>
           </li>
         </ul>
       </div>
