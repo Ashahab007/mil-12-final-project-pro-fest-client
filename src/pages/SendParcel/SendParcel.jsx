@@ -4,9 +4,11 @@ import toast from "react-hot-toast";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/UseAuth/useAxiosSecure";
+import UseAuth from "../../hooks/UseAuth/UseAuth";
 // 11.0 Now my requirement is create a send parcel for user using react hook form
 
 const SendParcel = () => {
+  const { user } = UseAuth();
   // 14.0 my requirement is save the data to the server using post method
 
   // 14.1 call the hook
@@ -154,6 +156,7 @@ const SendParcel = () => {
           delivery_status,
           payment_status,
           tracking_id,
+          userEmail: user.email,
         };
 
         // 14.2

@@ -7,6 +7,8 @@ import UseAuth from "../../hooks/UseAuth/UseAuth";
 
 const NavBar = () => {
   const { user } = UseAuth();
+  console.log(user);
+
   const navItems = (
     <>
       <li>
@@ -15,6 +17,7 @@ const NavBar = () => {
       <li>
         <NavLink to="/addParcel">Send Your Parcel</NavLink>
       </li>
+      {/* 15.3 */}
       {user && (
         <>
           <li>

@@ -3,7 +3,7 @@ import UseAuth from "../hooks/UseAuth/UseAuth";
 import { Navigate } from "react-router";
 
 // 9.0 my requirement is create a private route that if the user is not logged in it will redirect to the login page
-const PrivateRoutes = () => {
+const PrivateRoutes = ({ children }) => {
   // 9.1 call the user and loading from custom hook UseAuth
   const { user, loading } = UseAuth();
 
@@ -16,7 +16,7 @@ const PrivateRoutes = () => {
   if (!user) {
     return <Navigate to="/login"></Navigate>;
   }
-  return <div></div>;
+  return children;
 };
 
 export default PrivateRoutes;
