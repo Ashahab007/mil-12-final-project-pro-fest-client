@@ -18,4 +18,22 @@
 
 10.0 My requirement is create a Coverage component and show the map of service using react-leaflet leaflet. "npm install react-leaflet leaflet"
 
-// 11.0 Now my requirement is create a send parcel for user using react hook form
+11.0 Now my requirement is create a send parcel for user using react hook form
+
+12.0 created the server using ai
+
+13.0 as my requirement is perform crud operation using axios so install axios. for this crud operation with axios created as custom hook useAxiosSecure and create axios here that we can commonly use in all the crud operation.
+
+14.0 my requirement is save the data to the server using post method
+
+15.0 now my requirement is create a dashboard so created a DashBoardLayout
+
+16.0 my requirement is fetch the data using tanstack query. tanstack query is used when we update or delete the data we have to maintain state but using tanstack query this operation is easily handled. so run "npm i @tanstack/react-query"
+
+17.0 My requirement delete data using tanstack query and fetch the data using axiosSecure
+
+18.0 Implement logout
+
+19.0 Implementing user login
+
+20.0 Our requirement is redirect the user where user clicked a private route before login (not working)

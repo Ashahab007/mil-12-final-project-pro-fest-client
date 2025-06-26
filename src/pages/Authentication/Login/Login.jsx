@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import UseAuth from "../../../hooks/UseAuth/UseAuth";
+import { useLocation, useNavigate } from "react-router";
 
 // 3.1 created a login component
 const Login = () => {
@@ -9,6 +10,12 @@ const Login = () => {
   const { logIn } = UseAuth();
   // 4.0 my requirement is implement react hook form
   // 4.1 npm install react-hook-form then from doc select js for every form
+
+  // 20.3 if the state have  pathname then take to that routes or if not redirect to home
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state ? location.state : "/";
+  console.log(from);
 
   // 19.3
   //   4.2 use useForm and use the register and handleSubmit function from  useForm as per doc
@@ -21,7 +28,9 @@ const Login = () => {
     // 19.2 get the email and password from data which is from react hook form
     logIn(data.email, data.password)
       .then((res) => {
-        console.log(res.data);
+        console.log(res.user);
+        // 20.4
+        navigate(from);
       })
       .catch((error) => {
         console.log(error);
@@ -57,7 +66,8 @@ const Login = () => {
           <button className="btn btn-neutral mt-4">Login</button>
         </fieldset>
       </form>
-      <SocialLogin></SocialLogin>
+      {/* 20.5 same navigation for social login */}
+      <SocialLogin from={from}></SocialLogin>
     </div>
   );
 };
