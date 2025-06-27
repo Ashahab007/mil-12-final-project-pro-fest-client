@@ -4,6 +4,7 @@ import UseAuth from "../../../hooks/UseAuth/UseAuth";
 import useAxiosSecure from "../../../hooks/UseAuth/useAxiosSecure";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 // 15.4 created a My Parcel component to show my parcel
 
@@ -12,6 +13,8 @@ import Swal from "sweetalert2";
 const MyParcel = () => {
   const { user } = UseAuth();
   console.log(user);
+  // 21.5 as we are going to proceed to the route Payment we use useNavigate
+  const navigate = useNavigate();
 
   const axiosSecure = useAxiosSecure();
 
@@ -25,9 +28,11 @@ const MyParcel = () => {
     },
   });
   console.log(parcels);
-
-  const handlePay = (parcel) => {
-    console.log("Pay clicked:", parcel);
+  // 21.3 created handleOnPay
+  const handleOnPay = (id) => {
+    console.log("Pay clicked:", id);
+    // 21.6 navigate to Payment in dashboard for specific parcel
+    navigate(`/dashboard/payment/${id}`);
     // Logic to trigger payment
   };
 
@@ -108,7 +113,8 @@ const MyParcel = () => {
                   <td className="flex flex-wrap gap-2 justify-center">
                     <button
                       className="btn btn-xs btn-outline btn-primary"
-                      onClick={() => onPay(parcel)}
+                      // 21.4 created onClick handleOnPay event
+                      onClick={() => handleOnPay(parcel._id)}
                     >
                       Pay
                     </button>

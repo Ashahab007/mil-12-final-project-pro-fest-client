@@ -50,33 +50,6 @@ const SendParcel = () => {
     services.filter((d) => d.region === region).map((d) => d.district);
   // console.log(getDistrictsByRegion());
 
-  // cost calculation
-  /* const calCulateCost = (type, weight, isSameDistrict) => {
-    if (type === "document") {
-      return isSameDistrict ? 60 : 80;
-    }
-    const wt = parseFloat(weight || 0);
-    if (weight <= 3) {
-      return isSameDistrict ? 110 : 150;
-    }
-
-    const extrKg = wt - 3;
-    const extrCost = extrKg * 40;
-    return isSameDistrict ? 110 + extrCost : 150 + extrCost + 40;
-  }; */
-
-  /*  const onSubmit = (data) => {
-    const isSameDistrict = data.senderCenter === data.receiverCenter;
-    const cost = calCulateCost(
-      data.parcelType,
-      data.parcelWeight,
-      isSameDistrict
-    );
-    setDeliveryCost(cost);
-    toast.success(`Your Delivery Cost is ${cost}`);
-    console.log(data);
-  }; */
-
   const onSubmit = (data) => {
     const isSameDistrict = data.senderCenter === data.receiverCenter;
     const weight = parseFloat(data.parcelWeight || 0);
@@ -377,18 +350,6 @@ const SendParcel = () => {
         <button type="submit" className="btn btn-primary w-full">
           Submit
         </button>
-
-        {/*  {deliveryCost && !confirmed && (
-          <div className="mt-4 text-center">
-            <p className="text-lg font-medium">
-              Delivery Cost:{" "}
-              <span className="text-green-600">৳{deliveryCost}</span>
-            </p>
-            <button onClick={handleConfirm} className="btn btn-success mt-2">
-              Confirm & Save
-            </button>
-          </div>
-        )} */}
       </form>
     </div>
   );
