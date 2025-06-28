@@ -51,6 +51,15 @@ const DashBoardLayout = () => {
           <li>
             <NavLink to="/dashboard/myParcel">My Parcels</NavLink>
           </li>
+          <li>
+            <NavLink to="/dashboard/paymentHistory">Payment History</NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/track">Track Your Parcel</NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/update">Update Your Profile</NavLink>
+          </li>
         </ul>
       </div>
     </div>
