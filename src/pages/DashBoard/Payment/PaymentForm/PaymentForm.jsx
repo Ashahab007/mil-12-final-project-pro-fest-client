@@ -1,14 +1,20 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useAxiosSecure from "../../../../hooks/UseAuth/useAxiosSecure";
+import UseAuth from "../../../../hooks/UseAuth/UseAuth";
+import Swal from "sweetalert2";
 
 // 21.8 created a payment form component
 const PaymentForm = () => {
   // 21.11 import as per doc following two
   const stripe = useStripe();
   const elements = useElements();
+
+  const { user } = UseAuth();
+
+  const navigate = useNavigate();
 
   //   21.15 we need the id of specific parcel to send the payment to the server
   const { parcelId } = useParams();
@@ -67,40 +73,64 @@ const PaymentForm = () => {
       console.log("Payment Method", paymentMethod);
       //   21.14.2
       setError("");
-    }
 
-    // 21.17.5 creating payment intent in frontend and after that fill the form from ui and ui will get in console "res from intent data"
-    const res = await axiosSecure.post("/create-payment-intent", {
-      amountInCents,
-      parcelId,
-    });
-    console.log("res from intent", res);
+      // 21.17.5 creating payment intent in frontend and after that fill the form from ui and ui will get in console "res from intent data"
+      const res = await axiosSecure.post("/create-payment-intent", {
+        amountInCents,
+        parcelId,
+      });
+      console.log("res from intent", res);
 
-    // 21.17.6 implement payment confirmation with error
-    // Confirm card payment
-
-    const clientSecret = res.data.clientSecret;
-    const result = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          name: "Jenny Rosen", // You can collect this information from the user
+      // 21.17.6 implement payment confirmation with error
+      // Confirm card payment
+      const clientSecret = res.data.clientSecret; //this client secret is found from res.data
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: user.displayName, // You can collect this information from the user
+            email: user.email,
+          },
         },
-      },
-    });
-    if (result.error) {
-      // Show error to your customer
+      });
+      if (result.error) {
+        // Show error to your customer
 
-      console.log(result.error.message);
-      //   setSucceeded(false);
-    } else {
-      if (result.paymentIntent.status === "succeeded") {
-        // The payment has been processed!
-        // setError(null);
-        // setSucceeded(true);
-        console.log("Payment succeeded:", result.paymentIntent);
-        console.log(result);
-        // 21.17.7 now from this step fill up the card and pay u will see in console payment succeeded
+        setError(result.error.message);
+        //   setSucceeded(false);
+      } else {
+        setError("");
+        if (result.paymentIntent.status === "succeeded") {
+          // The payment has been processed!
+          // setError(null);
+          // setSucceeded(true);
+          console.log("Payment succeeded:", result.paymentIntent);
+          console.log(result);
+          // 21.17.7 now from this step fill up the card and pay u will see in console payment succeeded and also "res from intent"'s data. now go to https://dashboard.stripe.com/test/payments u will get your parcel payment "succeeded".
+
+          // 21.17.10 send the data to the server using axios so first created paymentData object
+          const transactionId = result.paymentIntent.id;
+          const paymentData = {
+            parcelId,
+            email: user.email,
+            amount,
+            transactionId: transactionId, //during onclick to pay button in console result.paymentIntent object is created and took the id form there and set it to transactionId
+            paymentMethod: result.paymentIntent.payment_method_types, //same as transactionId, took the payment_method_types
+          };
+
+          // 21.17.11 send the paymentData using axios
+          const paymentRes = await axiosSecure.post("/payments", paymentData);
+          if (paymentRes.data.insertedId) {
+            console.log("Successfully Paid for the parcel");
+            Swal.fire({
+              title: "✅ Payment Successful!",
+              html: `Your transaction ID is:<br><strong>${transactionId}</strong>`,
+              icon: "success",
+              confirmButtonText: "OK",
+            });
+            navigate("/dashboard/myParcel");
+          }
+        }
       }
     }
   };

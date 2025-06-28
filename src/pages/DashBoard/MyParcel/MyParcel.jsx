@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import UseAuth from "../../../hooks/UseAuth/UseAuth";
 import useAxiosSecure from "../../../hooks/UseAuth/useAxiosSecure";
 import { format } from "date-fns";
@@ -18,6 +18,8 @@ const MyParcel = () => {
 
   const axiosSecure = useAxiosSecure();
 
+  // const [parcelPayment, setParcelPayment] = useState([]);
+
   // 16.4 use the useQuery from doc which takes some parameter by default like isPending, isError, data, error. here we will use data and set the value parcels by default is a empty array. then get the data from server using axiosSecure.
   // 17.2 add refetch after parcel from tanstack query
   const { data: parcels = [], refetch } = useQuery({
@@ -28,11 +30,21 @@ const MyParcel = () => {
     },
   });
   console.log(parcels);
-  // 21.3 created handleOnPay
-  const handleOnPay = (id) => {
-    console.log("Pay clicked:", id);
+  // 21.3 created handleOnPay and try to disable the button but not working
+  const handleOnPay = (parcel) => {
+    console.log("Pay clicked:", parcel._id);
+    /* setParcelPayment((prev) => {
+      console.log("prev", prev);
+
+      prev.map((p) => {
+        console.log("p id", p._id);
+
+        p._id === parcel._id ? { ...p, payment_status: "Paid" } : p;
+      });
+    }); */
+
     // 21.6 navigate to Payment in dashboard for specific parcel
-    navigate(`/dashboard/payment/${id}`);
+    navigate(`/dashboard/payment/${parcel._id}`);
     // Logic to trigger payment
   };
 
@@ -114,13 +126,18 @@ const MyParcel = () => {
                     <button
                       className="btn btn-xs btn-outline btn-primary"
                       // 21.4 created onClick handleOnPay event
-                      onClick={() => handleOnPay(parcel._id)}
+                      onClick={() => {
+                        handleOnPay(parcel);
+                      }}
+                      disabled={parcel.payment_status === "Paid"}
                     >
                       Pay
                     </button>
                     <button
                       className="btn btn-xs btn-outline btn-info"
-                      onClick={() => onView(parcel)}
+                      onClick={() => {
+                        onView(parcel);
+                      }}
                     >
                       View
                     </button>
