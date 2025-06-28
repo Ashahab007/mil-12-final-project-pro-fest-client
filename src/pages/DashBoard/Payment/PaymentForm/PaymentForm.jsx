@@ -1,5 +1,8 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { useParams } from "react-router";
+import useAxiosSecure from "../../../../hooks/UseAuth/useAxiosSecure";
 
 // 21.8 created a payment form component
 const PaymentForm = () => {
@@ -7,8 +10,33 @@ const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
+  //   21.15 we need the id of specific parcel to send the payment to the server
+  const { parcelId } = useParams();
+  console.log("Parcel Id", parcelId);
+
   // 21.14 show error for invalid card
   const [error, setError] = useState("");
+
+  //   21.16 send the data to the server using tanstack query
+  const axiosSecure = useAxiosSecure();
+
+  //   21.16.1
+  const { isPending, data: parcelInfo = {} } = useQuery({
+    queryKey: ["parcels", parcelId],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/parcels/${parcelId}`);
+      return res.data;
+    },
+  });
+
+  if (isPending) {
+    return "...Loading";
+  }
+
+  console.log("Parcel info", parcelInfo);
+
+  // 21.16.2 now show the amount in a pay button
+  const amount = parcelInfo.totalCost;
 
   // 21.10 created handle submit
   const handleSubmit = async (e) => {
@@ -55,7 +83,8 @@ const PaymentForm = () => {
         type="submit"
         disabled={!stripe}
       >
-        Pay
+        {/* 21.16.3 show amount */}
+        Pay ${amount} Tk
       </button>
       {/* 21.14.3  now type in the form to test 4242 4242 4242 4242 and rest of the data is as ur wish*/}
       {error && <p className="text-red-500">{error}</p>}
