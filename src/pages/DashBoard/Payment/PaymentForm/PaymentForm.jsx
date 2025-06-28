@@ -35,8 +35,9 @@ const PaymentForm = () => {
 
   console.log("Parcel info", parcelInfo);
 
-  // 21.16.2 now show the amount in a pay button
+  // 21.16.2 now show the amount in a pay button and convert to cent because
   const amount = parcelInfo.totalCost;
+  const amountInCents = amount * 100;
 
   // 21.10 created handle submit
   const handleSubmit = async (e) => {
@@ -66,6 +67,41 @@ const PaymentForm = () => {
       console.log("Payment Method", paymentMethod);
       //   21.14.2
       setError("");
+    }
+
+    // 21.17.5 creating payment intent in frontend and after that fill the form from ui and ui will get in console "res from intent data"
+    const res = await axiosSecure.post("/create-payment-intent", {
+      amountInCents,
+      parcelId,
+    });
+    console.log("res from intent", res);
+
+    // 21.17.6 implement payment confirmation with error
+    // Confirm card payment
+
+    const clientSecret = res.data.clientSecret;
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: "Jenny Rosen", // You can collect this information from the user
+        },
+      },
+    });
+    if (result.error) {
+      // Show error to your customer
+
+      console.log(result.error.message);
+      //   setSucceeded(false);
+    } else {
+      if (result.paymentIntent.status === "succeeded") {
+        // The payment has been processed!
+        // setError(null);
+        // setSucceeded(true);
+        console.log("Payment succeeded:", result.paymentIntent);
+        console.log(result);
+        // 21.17.7 now from this step fill up the card and pay u will see in console payment succeeded
+      }
     }
   };
 
