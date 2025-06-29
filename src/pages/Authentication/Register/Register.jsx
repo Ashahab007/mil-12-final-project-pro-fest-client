@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import UseAuth from "../../../hooks/UseAuth/UseAuth";
 import axios from "axios";
+import useAxios from "../../../hooks/useAxios";
 
 // 5.0 My requirement is applying react hook form in Register section
 // 6.0 My requirement is show error in the form if validation is failed
@@ -9,7 +10,10 @@ const Register = () => {
   // 8.12  call the UseAuth hook to get the createUser from context
   const { createUser, updateUserProfile } = UseAuth();
 
-  // 22.0 our requirement is implement image upload in register
+  // 23.5 import useAxios
+  const axiosInstance = useAxios();
+
+  // 22.0 our requirement is implement name and image upload during registration
 
   // 22.5 took state for profile pic
   const [profilePic, setProfilePic] = useState("");
@@ -35,13 +39,25 @@ const Register = () => {
   };
 
   // 5.3 call the onSubmit as per doc
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
     // 8.13 create user after on Submit register form and pass the email and password as parameter
     createUser(data.email, data.password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         const user = userCredential.user;
         console.log(user);
+
+        // 23.1 create user info to send the data to the Db
+        const userInfo = {
+          email: data.email,
+          role: "user",
+          created_at: new Date().toISOString(),
+          last_log_in: new Date().toISOString(),
+        };
+
+        // 23.4 send the userInfo to the db using useAxios custom hook
+        const userRes = await axiosInstance.post("/users", userInfo);
+        console.log(userRes.data);
 
         // 22.9 create object and displayName will be from data which is from react hook during onSubmit
         const profileInfo = {

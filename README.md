@@ -47,3 +47,5 @@
 21.17.12 my requirement is Creates the payment history component to show the payment history by user email
 
 21.18 my requirement is tracking package. The component is created but the feature is not applied because it was the optional in the module
+
+22.0 our requirement is implement name and image upload during registration
