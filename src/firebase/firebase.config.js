@@ -27,4 +27,4 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
 // stripe payment secret key
-// sk_test_51ResXyPDXAjOVcw8VNGP2DgTWFLAeCiUext7KD1tFqXlc8DaADjd0HqyuRA6QFfq6nKCz6MccD3d51cJLZ5GF5cC00hxQOcsmZ
+// pk_test_51ResXyPDXAjOVcw8Q6Hj137Rat1oXqkWmnDZxnPpCNhD1DO2vG3CrG2v1X3t5d39CaaBn86fm6b7Cp5dXeETIFir009XG1bFCo
