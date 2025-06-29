@@ -37,3 +37,13 @@
 19.0 Implementing user login
 
 20.0 Our requirement is redirect the user where user clicked a private route before login (not working)
+
+21.0 My requirement is implement payment method using stripe js. from "https://github.com/stripe/react-stripe-js" and run "npm install @stripe/react-stripe-js @stripe/stripe-js" in client side.
+
+21.15 our requirement is pay the specific parcel according to id
+
+21.17 Create a PaymentIntent. Note: code is created by ai on that site ai assistant using command "i want to create custom card payment system using node js". then install stripe "npm install stripe". Now follow the step to apply stripe => create account in stripe https://docs.stripe.com/sdks.=> In dashboard if that site u will get Api keys. now copy the publishable key and save to client site dotenv.local => copy the secret key and save to server .env name gateway key.
+
+21.17.12 my requirement is Creates the payment history component to show the payment history by user email
+
+21.18 my requirement is tracking package. The component is created but the feature is not applied because it was the optional in the module

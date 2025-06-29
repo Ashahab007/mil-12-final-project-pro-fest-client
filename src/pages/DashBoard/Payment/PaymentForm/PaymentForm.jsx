@@ -6,7 +6,7 @@ import useAxiosSecure from "../../../../hooks/UseAuth/useAxiosSecure";
 import UseAuth from "../../../../hooks/UseAuth/UseAuth";
 import Swal from "sweetalert2";
 
-// 21.8 created a payment form component
+// 21.8.1 created a payment form component
 const PaymentForm = () => {
   // 21.11 import as per doc following two
   const stripe = useStripe();
@@ -15,18 +15,18 @@ const PaymentForm = () => {
   const { user } = UseAuth();
 
   const navigate = useNavigate();
-
-  //   21.15 we need the id of specific parcel to send the payment to the server
+  // 21.15 our requirement is pay the specific parcel according to id
+  //   21.15.1 we need the id of specific parcel to send the payment to the server
   const { parcelId } = useParams();
   console.log("Parcel Id", parcelId);
 
   // 21.14 show error for invalid card
   const [error, setError] = useState("");
 
-  //   21.16 send the data to the server using tanstack query
+  //   21.16 import axios hook
   const axiosSecure = useAxiosSecure();
 
-  //   21.16.1
+  //   21.16.1 get the parcel id using tansstack query
   const { isPending, data: parcelInfo = {} } = useQuery({
     queryKey: ["parcels", parcelId],
     queryFn: async () => {
@@ -41,7 +41,7 @@ const PaymentForm = () => {
 
   console.log("Parcel info", parcelInfo);
 
-  // 21.16.2 now show the amount in a pay button and convert to cent because
+  // 21.16.2 now show the amount in a pay button and convert to cent
   const amount = parcelInfo.totalCost;
   const amountInCents = amount * 100;
 

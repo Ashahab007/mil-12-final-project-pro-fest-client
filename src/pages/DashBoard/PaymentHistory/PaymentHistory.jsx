@@ -4,7 +4,7 @@ import useAxiosSecure from "../../../hooks/UseAuth/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 
-// 21.17.12 Creates the payment history component to show the payment history by user email
+// 21.17.12 my requirement is Creates the payment history component to show the payment history by user email
 
 const PaymentHistory = () => {
   const { user, loading, setLoading } = UseAuth();

@@ -66,7 +66,7 @@ export const router = createBrowserRouter([
     // 15.5 set the children MyParcel
     children: [
       { path: "myParcel", Component: MyParcel },
-      // 21.6 created a route
+      // 21.6.1 created a route
       { path: "payment/:parcelId", Component: Payment },
       // 21.17.13 created route
       { path: "paymentHistory", Component: PaymentHistory },

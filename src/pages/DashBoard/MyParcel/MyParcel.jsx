@@ -30,7 +30,7 @@ const MyParcel = () => {
     },
   });
   console.log(parcels);
-  // 21.3 created handleOnPay and try to disable the button but not working
+  // 21.3 created handleOnPay and try to disable the button
   const handleOnPay = (parcel) => {
     console.log("Pay clicked:", parcel._id);
     /* setParcelPayment((prev) => {
