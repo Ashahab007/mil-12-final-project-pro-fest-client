@@ -1,12 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import UseAuth from "../../../hooks/UseAuth/UseAuth";
+import axios from "axios";
 
 // 5.0 My requirement is applying react hook form in Register section
 // 6.0 My requirement is show error in the form if validation is failed
 const Register = () => {
   // 8.12  call the UseAuth hook to get the createUser from context
-  const { createUser } = UseAuth();
+  const { createUser, updateUserProfile } = UseAuth();
+
+  // 22.0 our requirement is implement image upload in register
+
+  // 22.5 took state for profile pic
+  const [profilePic, setProfilePic] = useState("");
+
+  // 22.3 create handleImageUpload function
+  const handleImageUpload = async (e) => {
+    e.preventDefault();
+    const image = e.target.files[0];
+    console.log(image);
+
+    const formData = new FormData();
+    formData.append("image", image);
+
+    // 22.4 Now copy api the key from imgBB => About section at left and save to environmental variable (VITE_IMAGE_UPLOAD_KEY=8bb585f3aee70f5225d80cd5879b5dce)
+    const imageUploadUrl = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_IMAGE_UPLOAD_KEY
+    }`;
+
+    const res = await axios.post(imageUploadUrl, formData);
+    console.log(res.data.data.url);
+    // 22.6
+    setProfilePic(res.data.data.url);
+  };
 
   // 5.3 call the onSubmit as per doc
   const onSubmit = (data) => {
@@ -16,6 +42,21 @@ const Register = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
+
+        // 22.9 create object and displayName will be from data which is from react hook during onSubmit
+        const profileInfo = {
+          displayName: data.name,
+          photoURL: profilePic,
+        };
+
+        // 22.10 pass the profileInfo
+        updateUserProfile(profileInfo)
+          .then(() => {
+            console.log("Profile name and pic updated");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         const errorCode = err.code;
@@ -39,6 +80,29 @@ const Register = () => {
       <h3>Create Your Account</h3>
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         <fieldset className="fieldset">
+          {/*Name field  */}
+          <label className="label">Your Name</label>
+          <input
+            type="text"
+            {...register("name", { required: true })}
+            className="input"
+            placeholder="Your Name"
+          />
+
+          {errors.name?.type === "required" && (
+            <p className="text-red-500">Email is required</p>
+          )}
+          {/* 22.1 Create a image field. we are not use the react hook for image */}
+          {/*Image field  */}
+          <label className="label">Your Image</label>
+          <input
+            // 22.2 implement onChange
+            onChange={handleImageUpload}
+            type="file"
+            className="input"
+            placeholder="Your Name"
+          />
+
           <label className="label">Email</label>
           <input
             type="email"
@@ -52,6 +116,7 @@ const Register = () => {
           {errors.email?.type === "required" && (
             <p className="text-red-500">Email is required</p>
           )}
+          {/* Password field */}
           <label className="label">Password</label>
           <input
             type="password"

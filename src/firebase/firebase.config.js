@@ -28,3 +28,5 @@ export const auth = getAuth(app);
 
 // stripe payment secret key
 // pk_test_51ResXyPDXAjOVcw8Q6Hj137Rat1oXqkWmnDZxnPpCNhD1DO2vG3CrG2v1X3t5d39CaaBn86fm6b7Cp5dXeETIFir009XG1bFCo
+
+// VITE_IMAGE_UPLOAD_KEY=8bb585f3aee70f5225d80cd5879b5dce
