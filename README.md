@@ -50,4 +50,4 @@
 
 22.0 our requirement is implement name and image upload during registration
 
-23.0 my requirement is create a user database to save user data by email and also check if the user is present it will not create user in db but if not present it will create user in db. By default add the user role=user
+23.0 my requirement is create a user database to save user data by email and also check if the user is present during create user account it will not create user in db but if not present it will create user in db. By default add the user role=user

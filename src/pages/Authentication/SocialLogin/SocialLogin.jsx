@@ -1,22 +1,37 @@
 import React from "react";
 import UseAuth from "../../../hooks/UseAuth/UseAuth";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import useAxios from "../../../hooks/useAxios";
 
 // 8.14.2 create a SocialLogin component
 const SocialLogin = ({ from }) => {
   // 8.14.3 call the googleSignIn
   const { googleSignIn } = UseAuth();
+
+  const axiosInstance = useAxios();
   // 20.6
   // const location = useLocation();
   const navigate = useNavigate();
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = async () => {
     googleSignIn()
-      .then((result) => {
+      .then(async (result) => {
         // The signed-in user info.
-        const user = result.user;
+        const data = result.user;
         navigate(from);
-        console.log("Login with google", user);
+        console.log("Login with google", data.email);
+
+        //24.0 my requirement is create a user database to save user data during SocialLogin and also check if the user is present during SocialLogin it will not create user in db but if not present it will create user in db. By default add the user role=user. same as 23.0
+        const userInfo = {
+          email: data.email,
+          role: "user",
+          created_at: new Date().toISOString(),
+          last_log_in: new Date().toISOString(),
+        };
+
+        // 24.1 send the userInfo to the db using useAxios custom hook
+        const userRes = await axiosInstance.post("/users", userInfo);
+        console.log(userRes.data);
       })
       .catch((error) => {
         // Handle Errors here.
