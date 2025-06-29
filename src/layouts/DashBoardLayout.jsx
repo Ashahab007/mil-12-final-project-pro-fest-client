@@ -1,6 +1,13 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router";
 import ProFast from "../shared/ProFast/ProFast";
+import {
+  FaHome,
+  FaBoxOpen,
+  FaHistory,
+  FaMapMarkerAlt,
+  FaUserEdit,
+} from "react-icons/fa";
 // 15.0  now my requirement is create a dashboard so created a DashBoardLayout
 
 const DashBoardLayout = () => {
@@ -46,19 +53,35 @@ const DashBoardLayout = () => {
         <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
           <ProFast></ProFast>
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/" className="flex items-center gap-2">
+              <FaHome /> Home
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/myParcel">My Parcels</NavLink>
+            <NavLink
+              to="/dashboard/myParcel"
+              className="flex items-center gap-2"
+            >
+              <FaBoxOpen /> My Parcels
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/paymentHistory">Payment History</NavLink>
+            <NavLink
+              to="/dashboard/paymentHistory"
+              className="flex items-center gap-2"
+            >
+              <FaHistory /> Payment History
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/track">Track Your Parcel</NavLink>
+            <NavLink to="/dashboard/track" className="flex items-center gap-2">
+              <FaMapMarkerAlt /> Track Your Parcel
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/update">Update Your Profile</NavLink>
+            <NavLink to="/dashboard/update" className="flex items-center gap-2">
+              <FaUserEdit /> Update Your Profile
+            </NavLink>
           </li>
         </ul>
       </div>
