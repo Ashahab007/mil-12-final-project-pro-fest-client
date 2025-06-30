@@ -12,6 +12,7 @@ import MyParcel from "../pages/DashBoard/MyParcel/MyParcel";
 import Payment from "../pages/DashBoard/Payment/Payment/Payment";
 import PaymentHistory from "../pages/DashBoard/PaymentHistory/PaymentHistory";
 import TrackPackage from "../pages/DashBoard/TrackPackage/TrackPackage";
+import BeARider from "../pages/BeARider/BeARider";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,16 @@ export const router = createBrowserRouter([
         path: "/coverage",
         Component: Coverage,
         // 10.4 fetch the json data of the districts
+        loader: () => fetch("/warehouses.json"),
+      },
+      // 26.0 now my requirement is implementing a role for rider
+      {
+        path: "/beARider",
+        element: (
+          <PrivateRoutes>
+            <BeARider></BeARider>
+          </PrivateRoutes>
+        ),
         loader: () => fetch("/warehouses.json"),
       },
     ],
