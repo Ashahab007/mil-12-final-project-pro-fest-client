@@ -27,7 +27,7 @@ const BeARider = () => {
   useEffect(() => {
     const uniqueRegions = [...new Set(warehouses.map((item) => item.region))];
     setRegions(uniqueRegions);
-  }, []);
+  }, [warehouses]);
 
   // Update districts based on selected region
   useEffect(() => {
@@ -35,7 +35,7 @@ const BeARider = () => {
       .filter((item) => item.region === selectedRegion)
       .map((item) => item.district);
     setDistricts(filteredDistricts);
-  }, [selectedRegion]);
+  }, [selectedRegion, warehouses]);
 
   const onSubmit = (data) => {
     const riderApplication = {

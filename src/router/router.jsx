@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
         // 10.4 fetch the json data of the districts
         loader: () => fetch("/warehouses.json"),
       },
-      // 26.0 now my requirement is implementing a role for rider
+      // 26.0 now my requirement is implementing application to be a rider
       {
         path: "/beARider",
         element: (

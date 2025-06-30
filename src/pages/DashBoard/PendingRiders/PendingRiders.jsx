@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import UseAuth from "../../../hooks/UseAuth/UseAuth";
 
+// 27.1 show the pending rider data
 const PendingRiders = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedRider, setSelectedRider] = useState(null);
@@ -24,7 +25,7 @@ const PendingRiders = () => {
   if (isPending) {
     return loading;
   }
-
+  // 27.2 upon status change the saved status will be saved in db
   const updateStatus = async (id, status) => {
     try {
       const res = await axiosSecure.patch(`/riders/${id}`, { status });
@@ -46,7 +47,7 @@ const PendingRiders = () => {
     <div className="p-4 max-w-6xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">📝 Pending Rider Applications</h2>
 
-      {isLoading ? (
+      {loading ? (
         <p className="text-center">Loading...</p>
       ) : riders.length === 0 ? (
         <p className="text-center text-gray-500">No pending riders found.</p>
@@ -171,95 +172,3 @@ const PendingRiders = () => {
 };
 
 export default PendingRiders;
-
-/* const PendingRiders = () => {
-  const axiosSecure = useAxiosSecure();
-
-  const {
-    data: riders = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["pendingRiders"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/riders/pending");
-      return res.data;
-    },
-  });
-
-  const handleApprove = async (id) => {
-    try {
-      const res = await axiosSecure.patch(`/riders/${id}`, {
-        status: "Approved",
-      });
-      if (res.data.modifiedCount > 0) {
-        Swal.fire("Success", "Rider status updated to Approved!", "success");
-        refetch();
-      }
-    } catch (error) {
-      Swal.fire("Error", "Failed to update status.", "error");
-    }
-  };
-
-  return (
-    <div className="p-4 max-w-6xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">📝 Pending Rider Applications</h2>
-
-      {isLoading ? (
-        <p className="text-center">Loading...</p>
-      ) : riders.length === 0 ? (
-        <p className="text-center text-gray-500">No pending riders found.</p>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="table table-zebra w-full text-sm">
-            <thead className="bg-base-200 text-xs uppercase">
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Region</th>
-                <th>District</th>
-                <th>Status</th>
-                <th className="text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {riders.map((rider, index) => (
-                <tr key={rider._id}>
-                  <td>{index + 1}</td>
-                  <td>{rider.name}</td>
-                  <td>{rider.phone}</td>
-                  <td>{rider.region}</td>
-                  <td>{rider.district}</td>
-                  <td>
-                    <span
-                      className={`badge ${
-                        rider.status === "Pending"
-                          ? "badge-warning"
-                          : "badge-success"
-                      }`}
-                    >
-                      {rider.status}
-                    </span>
-                  </td>
-                  <td className="text-right">
-                    <button
-                      onClick={() => handleApprove(rider._id)}
-                      className="btn btn-xs btn-success"
-                      disabled={rider.status === "Approved"}
-                    >
-                      Approve
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default PendingRiders;
- */

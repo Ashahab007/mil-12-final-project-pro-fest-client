@@ -53,3 +53,9 @@
 23.0 my requirement is create a user database to save user data by email and also check if the user is present during create user account it will not create user in db but if not present it will create user in db. By default add the user role=user
 
 24.0 my requirement is create a user database to save user data during SocialLogin and also check if the user is present during SocialLogin it will not create user in db but if not present it will create user in db. By default add the user role=user. same as 23.0
+
+25.0 Now our requirement is use firebase JWT to authenticate user
+
+26.0 now my requirement is implementing application to be a rider
+
+27.0 my requirement is create get api to send the pending riders data to ui and upon approve or reject the rider status will be save in db
