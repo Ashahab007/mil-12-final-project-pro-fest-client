@@ -14,6 +14,7 @@ import PaymentHistory from "../pages/DashBoard/PaymentHistory/PaymentHistory";
 import TrackPackage from "../pages/DashBoard/TrackPackage/TrackPackage";
 import BeARider from "../pages/BeARider/BeARider";
 import PendingRiders from "../pages/DashBoard/PendingRiders/PendingRiders";
+import ApprovedRiders from "../pages/DashBoard/ApprovedRiders/ApprovedRiders";
 
 export const router = createBrowserRouter([
   {
@@ -83,6 +84,7 @@ export const router = createBrowserRouter([
       // 21.17.13 created route
       { path: "paymentHistory", Component: PaymentHistory },
       { path: "riders/pending", Component: PendingRiders },
+      { path: "riders/approved", Component: ApprovedRiders },
       // 21.18.1
       { path: "track", Component: TrackPackage },
     ],

@@ -90,6 +90,12 @@ const DashBoardLayout = () => {
             >
               <FaUserEdit /> Pending Riders
             </NavLink>
+            <NavLink
+              to="/dashboard/riders/approved"
+              className="flex items-center gap-2"
+            >
+              <FaUserEdit /> Approved Riders
+            </NavLink>
           </li>
         </ul>
       </div>
