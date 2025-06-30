@@ -59,3 +59,7 @@
 26.0 now my requirement is implementing application to be a rider
 
 27.0 my requirement is create get api to send the pending riders data to ui and upon approve or reject the rider status will be save in db
+
+28.0 my requirement is show the approved rider in ui
+
+29.0 my requirement is when from pending rider when admin "Approved" any user the role of the user is changed to "rider" in usersCollection data to the db using email.

@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import UseAuth from "../../../hooks/UseAuth/UseAuth";
 
-// 28.0 my requirement is when from pending rider when i "Approved" any rider the role of the rider is changed to "rider" in usersCollection data to the db using email.
+// 29.0 my requirement is when from pending rider when admin "Approved" any user the role of the user is changed to "rider" in usersCollection data to the db using email.
 
 // 27.1 show the pending rider data
 const PendingRiders = () => {
@@ -28,10 +28,10 @@ const PendingRiders = () => {
     return loading;
   }
   // 27.2 upon status change the saved status will be saved in db
-  // 28.1 set email as a parameter
+  // 29.1 set email as a parameter
   const updateStatus = async (id, status, email) => {
     try {
-      // 28.3 send the email with the status
+      // 29.3 send the email with the status
       const res = await axiosSecure.patch(`/riders/${id}`, { status, email });
       if (res.data.modifiedCount > 0) {
         Swal.fire("Success", `Rider ${status}!`, "success");
@@ -100,7 +100,7 @@ const PendingRiders = () => {
                       >
                         <li>
                           <button
-                            // 28.2 pass the rider.email as argument
+                            // 29.2 pass the rider.email as argument
                             onClick={() =>
                               updateStatus(rider._id, "Approved", rider.email)
                             }
