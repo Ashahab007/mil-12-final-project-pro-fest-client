@@ -83,6 +83,14 @@ const DashBoardLayout = () => {
               <FaUserEdit /> Update Your Profile
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/dashboard/riders/pending"
+              className="flex items-center gap-2"
+            >
+              <FaUserEdit /> Pending Riders
+            </NavLink>
+          </li>
         </ul>
       </div>
     </div>

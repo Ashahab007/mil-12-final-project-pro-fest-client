@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import UseAuth from "../../hooks/UseAuth/UseAuth";
-import useAxios from "../../hooks/useAxios";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../hooks/UseAuth/useAxiosSecure";
 
-// 26.2
+// 26.2 created a rider form and send the data to db
 const BeARider = () => {
   const { user } = UseAuth();
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const [regions, setRegions] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -37,23 +37,27 @@ const BeARider = () => {
     setDistricts(filteredDistricts);
   }, [selectedRegion]);
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     const riderApplication = {
       ...data,
       name: user?.displayName || "Anonymous",
       email: user?.email || "no-email@example.com",
       status: "Pending", // default
     };
+    console.log(riderApplication);
 
-    try {
-      const res = await axiosSecure.post("/riders", riderApplication);
-      if (res.data.insertedId) {
-        Swal.fire("Success", "Rider application submitted!", "success");
-        reset();
-      }
-    } catch (err) {
-      Swal.fire("Error", "Something went wrong!", "error");
-    }
+    axiosSecure
+      .post("/riders", riderApplication)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          Swal.fire("Success", "Rider application submitted!", "success");
+          // reset();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
