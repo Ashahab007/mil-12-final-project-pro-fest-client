@@ -16,7 +16,10 @@ import BeARider from "../pages/BeARider/BeARider";
 import PendingRiders from "../pages/DashBoard/PendingRiders/PendingRiders";
 import ApprovedRiders from "../pages/DashBoard/ApprovedRiders/ApprovedRiders";
 import AdminManager from "../pages/DashBoard/AdminManager/AdminManager";
+import ForbiddenPage from "../pages/ForbiddenPage/ForbiddenPage";
+import AdminRoutes from "../routes/AdminRoutes";
 
+// 31.8 but problem is if u  paste the url "http://localhost:3000/riders/pending" or any of the AdminRoutes url u can see the data so to prevent this we will use verifyFBToken from the sever side
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -41,6 +44,11 @@ export const router = createBrowserRouter([
         Component: Coverage,
         // 10.4 fetch the json data of the districts
         loader: () => fetch("/warehouses.json"),
+      },
+      // 31.6 created a forbidden routes
+      {
+        path: "/forbidden",
+        Component: ForbiddenPage,
       },
       // 26.0 now my requirement is implementing application to be a rider
       {
@@ -84,11 +92,36 @@ export const router = createBrowserRouter([
       { path: "payment/:parcelId", Component: Payment },
       // 21.17.13 created route
       { path: "paymentHistory", Component: PaymentHistory },
-      { path: "riders/pending", Component: PendingRiders },
-      { path: "riders/approved", Component: ApprovedRiders },
+
+      {
+        path: "riders/pending",
+        // 31.7.1 wrap with AdminRoutes
+        element: (
+          <AdminRoutes>
+            <PendingRiders></PendingRiders>
+          </AdminRoutes>
+        ),
+      },
+      // 31.7.2 wrap with AdminRoutes
+      {
+        path: "riders/approved",
+        element: (
+          <AdminRoutes>
+            <ApprovedRiders></ApprovedRiders>
+          </AdminRoutes>
+        ),
+      },
       // 21.18.1
       { path: "track", Component: TrackPackage },
-      { path: "adminManager", Component: AdminManager },
+      // 31.7 wrap with AdminRoutes
+      {
+        path: "adminManager",
+        element: (
+          <AdminRoutes>
+            <AdminManager></AdminManager>
+          </AdminRoutes>
+        ),
+      },
     ],
   },
 ]);

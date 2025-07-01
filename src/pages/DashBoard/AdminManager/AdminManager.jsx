@@ -27,7 +27,7 @@ const AdminManager = () => {
   const handleRoleUpdate = async (email, role) => {
     const isPromote = role === "admin";
 
-    // Step 1: Confirm action
+    // Confirm action
     const confirm = await Swal.fire({
       title: isPromote ? "Make Admin?" : "Remove Admin?",
       text: isPromote
