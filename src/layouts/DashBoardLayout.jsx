@@ -9,9 +9,13 @@ import {
   FaUserEdit,
   FaUserShield,
 } from "react-icons/fa";
+import useUserRole from "../hooks/useUserRole";
 // 15.0  now my requirement is create a dashboard so created a DashBoardLayout
 
 const DashBoardLayout = () => {
+  const { role } = useUserRole();
+  console.log(role);
+
   return (
     // 15.1 take the design from daisy ui drawer. The sidebar will hidden for small devices and the sidebar will remain open for large devices
     <div className="drawer lg:drawer-open">
