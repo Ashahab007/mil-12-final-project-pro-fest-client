@@ -10,7 +10,6 @@ const AdminManager = () => {
   const [searchEmail, setSearchEmail] = useState("");
   const [triggerSearch, setTriggerSearch] = useState(false);
 
-  //   30.3 Search for users by partial email
   const {
     data: users = [],
     isLoading,
@@ -25,83 +24,129 @@ const AdminManager = () => {
     },
   });
 
-  //30.4 Update user's role
   const handleRoleUpdate = async (email, role) => {
+    const isPromote = role === "admin";
+
+    // Step 1: Confirm action
+    const confirm = await Swal.fire({
+      title: isPromote ? "Make Admin?" : "Remove Admin?",
+      text: isPromote
+        ? "This user will be granted admin privileges."
+        : "This user will lose admin privileges.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: isPromote ? "#16a34a" : "#dc2626", // green/red
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: isPromote ? "Yes, promote" : "Yes, remove",
+    });
+
+    if (!confirm.isConfirmed) return;
+
     try {
       const res = await axiosSecure.patch("/users/role", { email, role });
       if (res.data.modifiedCount > 0) {
-        Swal.fire("Success", `User role changed to ${role}`, "success");
+        await Swal.fire(
+          "Success!",
+          isPromote
+            ? "User has been made an admin."
+            : "User's admin access has been removed.",
+          "success"
+        );
         refetch();
       } else {
         Swal.fire("Info", "No changes made.", "info");
       }
     } catch (error) {
-      Swal.fire("Error", "Failed to update role", "error");
+      Swal.fire("Error", "Something went wrong.", "error");
     }
   };
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6">🔐 Manage Admin Access</h2>
+    <div className="p-6 flex flex-col items-center">
+      <div className="w-full max-w-5xl">
+        <h2 className="text-2xl font-bold mb-6">🛡️ Admin Manager</h2>
 
-      {/* Search Input */}
-      <div className="flex items-center gap-2 mb-6">
-        <input
-          type="text"
-          placeholder="Search user by email..."
-          className="input input-bordered w-full"
-          value={searchEmail}
-          onChange={(e) => setSearchEmail(e.target.value)}
-        />
-        <button
-          className="btn btn-primary"
-          onClick={() => setTriggerSearch(!triggerSearch)}
-        >
-          Search
-        </button>
+        {/* 🔍 Search bar */}
+        <div className="flex items-center gap-2 mb-4">
+          <input
+            type="text"
+            placeholder="Search user by email..."
+            className="input input-bordered w-80"
+            value={searchEmail}
+            onChange={(e) => setSearchEmail(e.target.value)}
+          />
+          <button
+            className="btn btn-primary"
+            onClick={() => setTriggerSearch(!triggerSearch)}
+          >
+            Search
+          </button>
+        </div>
+
+        {/* 📋 Table */}
+        <div className="overflow-x-auto min-h-[300px]">
+          {isLoading ? (
+            <p>Searching...</p>
+          ) : error || users.length === 0 ? (
+            <p className="text-center text-gray-500">
+              No matching users found.
+            </p>
+          ) : (
+            <table className="table table-zebra w-full text-sm">
+              <thead className="bg-base-200 text-xs uppercase">
+                <tr>
+                  <th>#</th>
+                  <th>Email</th>
+                  <th>Created At</th>
+                  <th>Role</th>
+                  <th className="text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user, index) => (
+                  <tr key={user.email}>
+                    <td>{index + 1}</td>
+                    <td>{user.email}</td>
+                    <td>
+                      {user.created_at
+                        ? new Date(user.created_at).toLocaleString()
+                        : "N/A"}
+                    </td>
+                    <td>
+                      <span
+                        className={`badge ${
+                          user.role === "admin"
+                            ? "badge-success"
+                            : "badge-neutral"
+                        }`}
+                      >
+                        {user.role || "user"}
+                      </span>
+                    </td>
+                    <td className="text-right">
+                      {user.role !== "admin" ? (
+                        <button
+                          className="btn btn-xs btn-success"
+                          onClick={() => handleRoleUpdate(user.email, "admin")}
+                        >
+                          Make Admin
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-xs btn-error"
+                          onClick={() => handleRoleUpdate(user.email, "user")}
+                        >
+                          Remove Admin
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
       </div>
-
-      {/* Results */}
-      {isLoading ? (
-        <p>Searching...</p>
-      ) : error ? (
-        <p className="text-red-500">No users found.</p>
-      ) : users.length === 0 ? (
-        <p className="text-gray-500">No matching users found.</p>
-      ) : (
-        users.map((user) => (
-          <div key={user.email} className="card bg-base-100 shadow p-4 mb-4">
-            <h3 className="font-semibold text-lg mb-2">👤 {user.email}</h3>
-            <p>
-              <strong>Created at:</strong>{" "}
-              {user.created_at
-                ? new Date(user.created_at).toLocaleString()
-                : "N/A"}
-            </p>
-            <p>
-              <strong>Current Role:</strong> {user.role || "user"}
-            </p>
-
-            <div className="mt-4 flex gap-2">
-              {user.role !== "Admin" ? (
-                <button
-                  className="btn btn-sm btn-success"
-                  onClick={() => handleRoleUpdate(user.email, "Admin")}
-                >
-                  Make Admin
-                </button>
-              ) : (
-                <button
-                  className="btn btn-sm btn-error"
-                  onClick={() => handleRoleUpdate(user.email, "User")}
-                >
-                  Remove Admin
-                </button>
-              )}
-            </div>
-          </div>
-        ))
-      )}
     </div>
   );
 };
