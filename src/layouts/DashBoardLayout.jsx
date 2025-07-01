@@ -88,28 +88,33 @@ const DashBoardLayout = () => {
               <FaUserEdit /> Update Your Profile
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              to="/dashboard/riders/pending"
-              className="flex items-center gap-2"
-            >
-              <FaUserEdit /> Pending Riders
-            </NavLink>
-            <NavLink
-              to="/dashboard/riders/approved"
-              className="flex items-center gap-2"
-            >
-              <FaUserEdit /> Approved Riders
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/adminManager"
-              className="flex items-center gap-2"
-            >
-              <FaUserShield /> Admin Manager
-            </NavLink>
-          </li>
+
+          {role === "admin" && (
+            <>
+              <li>
+                <NavLink
+                  to="/dashboard/riders/pending"
+                  className="flex items-center gap-2"
+                >
+                  <FaUserEdit /> Pending Riders
+                </NavLink>
+                <NavLink
+                  to="/dashboard/riders/approved"
+                  className="flex items-center gap-2"
+                >
+                  <FaUserEdit /> Approved Riders
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/adminManager"
+                  className="flex items-center gap-2"
+                >
+                  <FaUserShield /> Admin Manager
+                </NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>
