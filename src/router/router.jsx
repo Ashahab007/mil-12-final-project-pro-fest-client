@@ -15,6 +15,7 @@ import TrackPackage from "../pages/DashBoard/TrackPackage/TrackPackage";
 import BeARider from "../pages/BeARider/BeARider";
 import PendingRiders from "../pages/DashBoard/PendingRiders/PendingRiders";
 import ApprovedRiders from "../pages/DashBoard/ApprovedRiders/ApprovedRiders";
+import AdminManager from "../pages/DashBoard/AdminManager/AdminManager";
 
 export const router = createBrowserRouter([
   {
@@ -87,6 +88,7 @@ export const router = createBrowserRouter([
       { path: "riders/approved", Component: ApprovedRiders },
       // 21.18.1
       { path: "track", Component: TrackPackage },
+      { path: "adminManager", Component: AdminManager },
     ],
   },
 ]);

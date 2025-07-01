@@ -7,6 +7,7 @@ import {
   FaHistory,
   FaMapMarkerAlt,
   FaUserEdit,
+  FaUserShield,
 } from "react-icons/fa";
 // 15.0  now my requirement is create a dashboard so created a DashBoardLayout
 
@@ -95,6 +96,14 @@ const DashBoardLayout = () => {
               className="flex items-center gap-2"
             >
               <FaUserEdit /> Approved Riders
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/adminManager"
+              className="flex items-center gap-2"
+            >
+              <FaUserShield /> Admin Manager
             </NavLink>
           </li>
         </ul>
