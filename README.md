@@ -71,3 +71,5 @@
 32.0 my requirement is as like as verifyFBToken we will also verify admin using custom middleware. as we know the email and token is comes from decoded. we use email here to find the role.
 
 33.0 as we have previously handled interceptors request now we have to also handled interceptors response (as per doc) i.e forcefully redirect to forbidden page or logout user according to status.
+
+34.0 my requirement is assign parcel from parcel collections that are paid but delivery_status pending

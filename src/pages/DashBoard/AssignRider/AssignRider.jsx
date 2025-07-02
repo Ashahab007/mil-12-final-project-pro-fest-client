@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 
 // 34.0 my requirement is assign parcel from parcel collections that are paid but delivery_status pending
+
+// 35.0 my requirement is assign the parcel to the specific region rider and update the delivery status
 const AssignRider = () => {
   const { loading, user } = UseAuth();
   const axiosSecure = useAxiosSecure();
@@ -31,17 +33,6 @@ const AssignRider = () => {
       icon: "info",
       confirmButtonText: "OK",
     });
-
-    // Placeholder for actual PATCH request:
-    /*
-      axios.patch(`/parcels/assign/${parcelId}`, { riderId: selectedRiderId })
-        .then(res => {
-          if (res.data.modifiedCount > 0) {
-            Swal.fire("Success", "Rider assigned", "success");
-            refetch();
-          }
-        });
-      */
   };
 
   if (isLoading) return loading;
