@@ -29,7 +29,7 @@ const AssignRider = () => {
     },
   });
 
-  // 35.2
+  // 35.3
   const { data: riders = [], isLoading: loadingRiders } = useQuery({
     queryKey: ["riders", selectedParcel?.receiverRegion],
     enabled: !!selectedParcel,
@@ -55,7 +55,7 @@ const AssignRider = () => {
   if (isError)
     return <p className="p-4 text-red-500">Failed to load parcels</p>;
 
-  // 35.3
+  // 35.2
   const handleOpenModal = (parcel) => {
     setSelectedParcel(parcel);
     setSelectedRider(null);
