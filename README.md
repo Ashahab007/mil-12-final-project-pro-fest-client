@@ -63,3 +63,11 @@
 28.0 my requirement is show the approved rider in ui
 
 29.0 my requirement is when from pending rider when admin "Approved" any user the role of the user is changed to "rider" in usersCollection data to the db using email.
+
+30.0 my requirement is admin can search user by email with a single word search and change the user role to admin/ user.
+
+31.0 My requirement is create a admin protected route
+
+32.0 my requirement is as like as verifyFBToken we will also verify admin using custom middleware. as we know the email and token is comes from decoded. we use email here to find the role.
+
+33.0 as we have previously handled interceptors request now we have to also handled interceptors response (as per doc) i.e forcefully redirect to forbidden page or logout user according to status.

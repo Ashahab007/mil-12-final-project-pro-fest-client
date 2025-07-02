@@ -8,6 +8,8 @@ import {
   FaMapMarkerAlt,
   FaUserEdit,
   FaUserShield,
+  FaUserCheck,
+  FaArrowAltCircleRight,
 } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
 // 15.0  now my requirement is create a dashboard so created a DashBoardLayout
@@ -92,6 +94,15 @@ const DashBoardLayout = () => {
           {/* 31.4 conditionally set the role for admin but from this step if u login with user account and paste http://localhost:5173/dashboard/adminManager it will redirect to that pages to stop this we will create a private route name AdminRoutes*/}
           {role === "admin" && (
             <>
+              {/* 34.1 created a navigation */}
+              <li>
+                <NavLink
+                  to="/dashboard/riders/assign"
+                  className="flex items-center gap-2"
+                >
+                  <FaArrowAltCircleRight /> Assign Rider
+                </NavLink>
+              </li>
               <li>
                 <NavLink
                   to="/dashboard/riders/pending"
@@ -99,6 +110,9 @@ const DashBoardLayout = () => {
                 >
                   <FaUserEdit /> Pending Riders
                 </NavLink>
+              </li>
+
+              <li>
                 <NavLink
                   to="/dashboard/riders/approved"
                   className="flex items-center gap-2"
