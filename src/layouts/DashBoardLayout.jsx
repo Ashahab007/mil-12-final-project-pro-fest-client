@@ -11,6 +11,7 @@ import {
   FaUserCheck,
   FaArrowAltCircleRight,
   FaTruckLoading,
+  FaCheckCircle,
 } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
 // 15.0  now my requirement is create a dashboard so created a DashBoardLayout
@@ -102,6 +103,15 @@ const DashBoardLayout = () => {
                   className="flex items-center gap-2"
                 >
                   <FaTruckLoading /> Pending Deliveries
+                </NavLink>
+              </li>
+              {/* 38.2 */}
+              <li>
+                <NavLink
+                  to="/dashboard/completedDeliveries"
+                  className="flex items-center gap-2"
+                >
+                  <FaCheckCircle /> Completed Deliveries
                 </NavLink>
               </li>
             </>

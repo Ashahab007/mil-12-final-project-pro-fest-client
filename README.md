@@ -75,3 +75,5 @@
 34.0 my requirement is assign parcel from parcel collections that are paid but delivery_status pending
 
 35.0 my requirement is assign the parcel to the specific region rider and update the delivery status sending the rider name, email, id to the parcelsCollection
+
+36.0 my requirement is only rider can see his pending deliveries and protect the route as like as AdminRoutes

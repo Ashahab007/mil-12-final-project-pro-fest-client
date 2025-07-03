@@ -21,6 +21,7 @@ import AdminRoutes from "../routes/AdminRoutes";
 import AssignRider from "../pages/DashBoard/AssignRider/AssignRider";
 import RiderRoutes from "../routes/RiderRoutes";
 import PendingDeliveries from "../pages/DashBoard/PendingDeliveries/PendingDeliveries";
+import CompletedDeliveries from "../pages/DashBoard/CompletedDeliveries/CompletedDeliveries";
 
 // 31.8 but problem is if u  paste the url "http://localhost:3000/riders/pending" or any of the AdminRoutes url u can see the data so to prevent this we will use verifyFBToken from the sever side
 export const router = createBrowserRouter([
@@ -103,6 +104,15 @@ export const router = createBrowserRouter([
         element: (
           <RiderRoutes>
             <PendingDeliveries></PendingDeliveries>
+          </RiderRoutes>
+        ),
+      },
+      // 38.1
+      {
+        path: "completedDeliveries",
+        element: (
+          <RiderRoutes>
+            <CompletedDeliveries></CompletedDeliveries>
           </RiderRoutes>
         ),
       },
