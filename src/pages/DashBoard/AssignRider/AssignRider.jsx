@@ -41,8 +41,12 @@ const AssignRider = () => {
 
   // 35.5
   const assignMutation = useMutation({
-    mutationFn: ({ parcelId, riderId }) =>
-      axiosSecure.patch(`/parcels/${parcelId}/assign-rider`, { riderId }),
+    mutationFn: ({ parcelId, rider }) =>
+      axiosSecure.patch(`/parcels/${parcelId}/assign-rider`, {
+        riderId: rider._id,
+        riderName: rider.name,
+        riderEmail: rider.email,
+      }),
     onSuccess: () => {
       Swal.fire("Success", "Rider assigned!", "success");
       setSelectedParcel(null);
@@ -59,7 +63,11 @@ const AssignRider = () => {
     }
     assignMutation.mutate({
       parcelId: selectedParcel._id,
-      riderId: selectedRider,
+      rider: {
+        _id: selectedRider._id,
+        name: selectedRider.name,
+        email: selectedRider.email,
+      },
     });
   };
 
@@ -137,12 +145,18 @@ const AssignRider = () => {
             ) : (
               <select
                 className="select select-bordered w-full mb-4"
-                onChange={(e) => setSelectedRider(e.target.value)}
+                onChange={(e) => {
+                  const riderId = e.target.value;
+                  const riderObj = riders.find(
+                    (rider) => rider._id === riderId
+                  );
+                  setSelectedRider(riderObj || null);
+                }}
               >
                 <option value="">Select rider</option>
-                {riders.map((r) => (
-                  <option key={r._id} value={r._id}>
-                    {r.name} ({r.email})
+                {riders.map((rider) => (
+                  <option key={rider._id} value={rider._id}>
+                    {rider.name} ({rider.email})
                   </option>
                 ))}
               </select>
