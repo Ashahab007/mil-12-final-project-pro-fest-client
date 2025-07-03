@@ -10,13 +10,14 @@ import {
   FaUserShield,
   FaUserCheck,
   FaArrowAltCircleRight,
+  FaTruckLoading,
 } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
 // 15.0  now my requirement is create a dashboard so created a DashBoardLayout
 
 const DashBoardLayout = () => {
   // 31.3 check that the role is coming or not
-  const { role } = useUserRole();
+  const { role, isLoading } = useUserRole();
   console.log(role);
 
   return (
@@ -91,6 +92,21 @@ const DashBoardLayout = () => {
               <FaUserEdit /> Update Your Profile
             </NavLink>
           </li>
+          {/* 36.1 created a rider link */}
+          {/* Rider Links */}
+          {!isLoading && role === "rider" && (
+            <>
+              <li>
+                <NavLink
+                  to="/dashboard/pendingDeliveries"
+                  className="flex items-center gap-2"
+                >
+                  <FaTruckLoading /> Pending Deliveries
+                </NavLink>
+              </li>
+            </>
+          )}
+          {/* Admin links */}
           {/* 31.4 conditionally set the role for admin but from this step if u login with user account and paste http://localhost:5173/dashboard/adminManager it will redirect to that pages to stop this we will create a private route name AdminRoutes*/}
           {role === "admin" && (
             <>

@@ -73,3 +73,5 @@
 33.0 as we have previously handled interceptors request now we have to also handled interceptors response (as per doc) i.e forcefully redirect to forbidden page or logout user according to status.
 
 34.0 my requirement is assign parcel from parcel collections that are paid but delivery_status pending
+
+35.0 my requirement is assign the parcel to the specific region rider and update the delivery status sending the rider name, email, id to the parcelsCollection
