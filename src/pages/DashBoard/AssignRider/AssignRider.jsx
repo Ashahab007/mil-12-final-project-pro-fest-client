@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useAxiosSecure from "../../../hooks/UseAuth/useAxiosSecure";
 import Swal from "sweetalert2";
 import UseAuth from "../../../hooks/UseAuth/UseAuth";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 
 // 34.0 my requirement is assign parcel from parcel collections that are paid but delivery_status pending
@@ -39,16 +39,31 @@ const AssignRider = () => {
     },
   });
 
+  // 35.5
+  const assignMutation = useMutation({
+    mutationFn: ({ parcelId, riderId }) =>
+      axiosSecure.patch(`/parcels/${parcelId}/assign-rider`, { riderId }),
+    onSuccess: () => {
+      Swal.fire("Success", "Rider assigned!", "success");
+      setSelectedParcel(null);
+      setSelectedRider(null);
+      refetch();
+    },
+    onError: () => Swal.fire("Error", "Assignment failed", "error"),
+  });
+
+  // 35.6
   const handleAssign = () => {
-    Swal.fire({
-      title: "Assign Rider",
-      text: "This feature is under development.",
-      icon: "info",
-      confirmButtonText: "OK",
+    if (!selectedRider) {
+      return Swal.fire("Error", "Please select a rider", "error");
+    }
+    assignMutation.mutate({
+      parcelId: selectedParcel._id,
+      riderId: selectedRider,
     });
   };
 
-  if (isLoading) return loading;
+  if (isLoading) return <p>Loading . . . </p>;
 
   if (isError)
     return <p className="p-4 text-red-500">Failed to load parcels</p>;
