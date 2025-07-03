@@ -44,15 +44,25 @@ const PendingDeliveries = () => {
   });
 
   // 36.7
-  const handleStatusChange = (parcel, nextStatus) => {
+  const handleStatusChange = (parcel) => {
+    let nextStatus = null;
+    if (parcel.delivery_status === "Assigned") nextStatus = "In-Transit";
+    else if (parcel.delivery_status === "In-Transit") nextStatus = "Delivered";
+
+    if (!nextStatus) return;
+
     Swal.fire({
-      title: `Are you sure you want to mark this as ${nextStatus}?`,
+      title: `Confirm status change?`,
+      text: `This will update status to "${nextStatus}"`,
       icon: "question",
       showCancelButton: true,
-      confirmButtonText: "Yes, update it",
+      confirmButtonText: "Yes, update",
     }).then((result) => {
       if (result.isConfirmed) {
-        statusMutation.mutate({ parcelId: parcel._id, status: nextStatus });
+        statusMutation.mutate({
+          parcelId: parcel._id,
+          status: nextStatus,
+        });
       }
     });
   };
@@ -72,7 +82,7 @@ const PendingDeliveries = () => {
               <tr>
                 <th>#</th>
                 <th>Tracking ID</th>
-                <th>Parcel Title</th>
+                <th>Title</th>
                 <th>Receiver</th>
                 <th>Region</th>
                 <th>Status</th>
@@ -81,12 +91,17 @@ const PendingDeliveries = () => {
             </thead>
             <tbody>
               {parcels.map((parcel, idx) => {
-                const nextStatus =
-                  parcel.delivery_status === "Assigned"
-                    ? "Picked Up"
-                    : parcel.delivery_status === "Picked Up"
-                    ? "Delivered"
-                    : null;
+                let buttonLabel = null;
+                let isDisabled = false;
+
+                if (parcel.delivery_status === "Assigned") {
+                  buttonLabel = "Mark as Picked Up";
+                } else if (parcel.delivery_status === "In-Transit") {
+                  buttonLabel = "Mark as Delivered";
+                } else {
+                  buttonLabel = "Delivered";
+                  isDisabled = true;
+                }
 
                 return (
                   <tr key={parcel._id}>
@@ -96,21 +111,26 @@ const PendingDeliveries = () => {
                     <td>{parcel.receiverName}</td>
                     <td>{parcel.receiverRegion}</td>
                     <td>
-                      <span className="badge badge-info">
+                      <span
+                        className={`badge ${
+                          parcel.delivery_status === "Delivered"
+                            ? "badge-success"
+                            : parcel.delivery_status === "In-Transit"
+                            ? "badge-info"
+                            : "badge-warning"
+                        }`}
+                      >
                         {parcel.delivery_status}
                       </span>
                     </td>
                     <td className="text-right">
-                      {nextStatus ? (
-                        <button
-                          className="btn btn-sm btn-primary"
-                          onClick={() => handleStatusChange(parcel, nextStatus)}
-                        >
-                          Mark as {nextStatus}
-                        </button>
-                      ) : (
-                        <span className="text-gray-400 italic">Completed</span>
-                      )}
+                      <button
+                        className="btn btn-sm btn-primary"
+                        onClick={() => handleStatusChange(parcel)}
+                        disabled={isDisabled}
+                      >
+                        {buttonLabel}
+                      </button>
                     </td>
                   </tr>
                 );
