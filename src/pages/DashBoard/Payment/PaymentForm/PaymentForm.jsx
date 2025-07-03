@@ -110,6 +110,7 @@ const PaymentForm = () => {
 
           // 21.17.10 send the data to the server using axios so first created paymentData object
           const transactionId = result.paymentIntent.id;
+
           const paymentData = {
             parcelId,
             email: user.email,
@@ -117,6 +118,8 @@ const PaymentForm = () => {
             transactionId: transactionId, //during onclick to pay button in console result.paymentIntent object is created and took the id form there and set it to transactionId
             paymentMethod: result.paymentIntent.payment_method_types, //same as transactionId, took the payment_method_types
           };
+
+          console.log(paymentData);
 
           // 21.17.11 send the paymentData using axios
           const paymentRes = await axiosSecure.post("/payments", paymentData);

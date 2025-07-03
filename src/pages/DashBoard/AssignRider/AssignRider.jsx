@@ -22,9 +22,7 @@ const AssignRider = () => {
   } = useQuery({
     queryKey: ["assignableParcels"],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/parcels?email=${user.email}&status=assignable`
-      );
+      const res = await axiosSecure.get(`/parcels?status=assignable`);
       return res.data;
     },
   });

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/UseAuth/useAxiosSecure";
 import UseAuth from "../../hooks/UseAuth/UseAuth";
@@ -30,6 +30,7 @@ const SendParcel = () => {
   } = useForm();
   const [deliveryCost, setDeliveryCost] = useState(0);
   const [showWeight, setShowWeight] = useState(false);
+  const navigate = useNavigate();
 
   const services = useLoaderData();
 
@@ -136,7 +137,7 @@ const SendParcel = () => {
         axiosSecure.post("/parcels", parcelData).then((res) => {
           console.log(res.data);
           if (res.data.insertedId) {
-            // todo: redirect to the payment page using Swal.fire
+            navigate("/dashboard/myParcel");
             // Swal.fire
           }
         });
