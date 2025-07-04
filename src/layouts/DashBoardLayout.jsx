@@ -12,6 +12,7 @@ import {
   FaArrowAltCircleRight,
   FaTruckLoading,
   FaCheckCircle,
+  FaMoneyBillWave,
 } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
 // 15.0  now my requirement is create a dashboard so created a DashBoardLayout
@@ -112,6 +113,14 @@ const DashBoardLayout = () => {
                   className="flex items-center gap-2"
                 >
                   <FaCheckCircle /> Completed Deliveries
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/my-earnings"
+                  className="flex items-center gap-2"
+                >
+                  <FaMoneyBillWave /> My Earnings
                 </NavLink>
               </li>
             </>

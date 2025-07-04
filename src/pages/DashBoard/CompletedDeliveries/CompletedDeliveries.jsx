@@ -4,7 +4,6 @@ import UseAuth from "../../../hooks/UseAuth/UseAuth";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 
-// 38.0 my requirement is rider can see his completed deliveries
 const CompletedDeliveries = () => {
   const { user } = UseAuth();
   const axiosSecure = useAxiosSecure();
@@ -25,21 +24,21 @@ const CompletedDeliveries = () => {
     },
   });
 
-  const calculateEarning = (delivery) => {
-    const isSameRegion = delivery.senderRegion === delivery.receiverRegion;
+  const calculateEarning = (d) => {
+    const isSameRegion = d.senderRegion === d.receiverRegion;
     const percentage = isSameRegion ? 0.8 : 0.3;
-    return Math.round(delivery.totalCost * percentage);
+    return Math.round(d.totalCost * percentage);
   };
 
   const totalEarnings = deliveries
     .filter((d) => !d.cashed_out)
     .reduce((sum, d) => sum + calculateEarning(d), 0);
 
-  // Mutation for cash out
+  // ✅ Updated to ensure cashout date is also saved
   const cashoutMutation = useMutation({
     mutationFn: async (parcelId) => {
       const res = await axiosSecure.patch(`/parcels/${parcelId}/cashout`, {
-        cashed_out: true,
+        cashed_out: true, // passed but also handled in backend
       });
       return res.data;
     },
@@ -51,7 +50,7 @@ const CompletedDeliveries = () => {
       Swal.fire("Error", "Cash out failed!", "error");
     },
   });
-  // 38.5
+
   const handleCashOut = (parcelId) => {
     Swal.fire({
       title: "Are you sure?",
@@ -88,13 +87,17 @@ const CompletedDeliveries = () => {
               <th>From</th>
               <th>Cost</th>
               <th>Earning</th>
-              <th>Delivered</th>
-              <th className="text-right">Cashout</th>
+              <th>Parcel Created</th>
+              <th>Cash Out Date</th>
+              <th className="text-right">Action</th>
             </tr>
           </thead>
           <tbody>
             {deliveries.map((parcel, idx) => {
               const earning = calculateEarning(parcel);
+              const cashoutDate = parcel.cashed_out_date
+                ? format(new Date(parcel.cashed_out_date), "PPP")
+                : "—";
               return (
                 <tr key={parcel._id}>
                   <td>{idx + 1}</td>
@@ -106,6 +109,7 @@ const CompletedDeliveries = () => {
                   <td>৳{parcel.totalCost}</td>
                   <td>৳{earning}</td>
                   <td>{format(new Date(parcel.creation_date), "PPP")}</td>
+                  <td>{cashoutDate}</td>
                   <td className="text-right">
                     {parcel.cashed_out ? (
                       <button className="btn btn-sm btn-success" disabled>
@@ -113,9 +117,7 @@ const CompletedDeliveries = () => {
                       </button>
                     ) : (
                       <button
-                        onClick={() =>
-                          handleCashOut(parcel._id?.$oid || parcel._id)
-                        }
+                        onClick={() => handleCashOut(parcel._id)}
                         className="btn btn-sm btn-primary"
                       >
                         Cash Out
