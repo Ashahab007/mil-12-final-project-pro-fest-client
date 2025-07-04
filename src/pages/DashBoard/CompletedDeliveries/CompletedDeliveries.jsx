@@ -34,11 +34,10 @@ const CompletedDeliveries = () => {
     .filter((d) => !d.cashed_out)
     .reduce((sum, d) => sum + calculateEarning(d), 0);
 
-  // ✅ Updated to ensure cashout date is also saved
   const cashoutMutation = useMutation({
     mutationFn: async (parcelId) => {
       const res = await axiosSecure.patch(`/parcels/${parcelId}/cashout`, {
-        cashed_out: true, // passed but also handled in backend
+        cashed_out: true,
       });
       return res.data;
     },
@@ -88,7 +87,9 @@ const CompletedDeliveries = () => {
               <th>Cost</th>
               <th>Earning</th>
               <th>Parcel Created</th>
-              <th>Cash Out Date</th>
+              <th>In Transit</th>
+              <th>Delivered</th>
+              <th>Cash Out</th>
               <th className="text-right">Action</th>
             </tr>
           </thead>
@@ -98,6 +99,9 @@ const CompletedDeliveries = () => {
               const cashoutDate = parcel.cashed_out_date
                 ? format(new Date(parcel.cashed_out_date), "PPP")
                 : "—";
+              const inTransitDate = parcel.in_transit_date_str || "—";
+              const deliveredDate = parcel.delivered_date_str || "—";
+
               return (
                 <tr key={parcel._id}>
                   <td>{idx + 1}</td>
@@ -109,6 +113,8 @@ const CompletedDeliveries = () => {
                   <td>৳{parcel.totalCost}</td>
                   <td>৳{earning}</td>
                   <td>{format(new Date(parcel.creation_date), "PPP")}</td>
+                  <td>{inTransitDate}</td>
+                  <td>{deliveredDate}</td>
                   <td>{cashoutDate}</td>
                   <td className="text-right">
                     {parcel.cashed_out ? (
