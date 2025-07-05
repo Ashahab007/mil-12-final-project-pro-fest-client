@@ -25,11 +25,21 @@ const PendingDeliveries = () => {
 
   //36.6 Mutation to update delivery status
   const statusMutation = useMutation({
-    mutationFn: async ({ parcelId, status }) => {
+    // 40.5 add trackingId, riderName, riderEmail
+    mutationFn: async ({
+      parcelId,
+      status,
+      trackingId,
+      riderName,
+      riderEmail,
+    }) => {
       const res = await axiosSecure.patch(
         `/parcels/${parcelId}/update-status`,
         {
           delivery_status: status,
+          tracking_id: trackingId,
+          assign_rider_name: riderName,
+          assign_rider_email: riderEmail,
         }
       );
       return res.data;
@@ -59,9 +69,13 @@ const PendingDeliveries = () => {
       confirmButtonText: "Yes, update",
     }).then((result) => {
       if (result.isConfirmed) {
+        // 40.6
         statusMutation.mutate({
           parcelId: parcel._id,
           status: nextStatus,
+          trackingId: parcel.tracking_id,
+          riderName: parcel.assign_rider_name,
+          riderEmail: parcel.assign_rider_email,
         });
       }
     });
