@@ -40,12 +40,14 @@ const AssignRider = () => {
   });
 
   // 35.5
+
   const assignMutation = useMutation({
     mutationFn: ({ parcelId, rider }) =>
       axiosSecure.patch(`/parcels/${parcelId}/assign-rider`, {
         riderId: rider._id,
         riderName: rider.name,
         riderEmail: rider.email,
+        trackingId: selectedParcel.tracking_id,
       }),
     onSuccess: () => {
       Swal.fire("Success", "Rider assigned!", "success");
@@ -61,12 +63,15 @@ const AssignRider = () => {
     if (!selectedRider) {
       return Swal.fire("Error", "Please select a rider", "error");
     }
+
+    // 40.3 insert tracking_id
     assignMutation.mutate({
       parcelId: selectedParcel._id,
       rider: {
         _id: selectedRider._id,
         name: selectedRider.name,
         email: selectedRider.email,
+        trackingId: selectedParcel.tracking_id,
       },
     });
   };

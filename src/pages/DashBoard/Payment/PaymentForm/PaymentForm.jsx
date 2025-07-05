@@ -44,6 +44,8 @@ const PaymentForm = () => {
   // 21.16.2 now show the amount in a pay button and convert to cent
   const amount = parcelInfo.totalCost;
   const amountInCents = amount * 100;
+  const trackingId = parcelInfo.tracking_id;
+  console.log("tracking id from payment", parcelInfo.tracking_id);
 
   // 21.10 created handle submit
   const handleSubmit = async (e) => {
@@ -117,6 +119,7 @@ const PaymentForm = () => {
             amount,
             transactionId: transactionId, //during onclick to pay button in console result.paymentIntent object is created and took the id form there and set it to transactionId
             paymentMethod: result.paymentIntent.payment_method_types, //same as transactionId, took the payment_method_types
+            trackingId,
           };
 
           console.log(paymentData);

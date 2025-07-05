@@ -156,7 +156,7 @@ export const router = createBrowserRouter([
         ),
       },
       // 21.18.1
-      { path: "track", Component: TrackPackage },
+      { path: "track/:trackingId", Component: TrackPackage },
       // 31.7 wrap with AdminRoutes
       {
         path: "adminManager",

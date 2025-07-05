@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router";
+import { NavLink, Outlet, useParams } from "react-router";
 import ProFast from "../shared/ProFast/ProFast";
 import {
   FaHome,
@@ -15,9 +15,15 @@ import {
   FaMoneyBillWave,
 } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
-// 15.0  now my requirement is create a dashboard so created a DashBoardLayout
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../hooks/UseAuth/useAxiosSecure";
+import UseAuth from "../hooks/UseAuth/UseAuth";
 
+// 15.0  now my requirement is create a dashboard so created a DashBoardLayout
 const DashBoardLayout = () => {
+  const { tracking_id } = useParams();
+  console.log(tracking_id);
+
   // 31.3 check that the role is coming or not
   const { role, isLoading } = useUserRole();
   console.log(role);
@@ -85,7 +91,10 @@ const DashBoardLayout = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/track" className="flex items-center gap-2">
+            <NavLink
+              to={`/dashboard/track/${tracking_id}`}
+              className="flex items-center gap-2"
+            >
               <FaMapMarkerAlt /> Track Your Parcel
             </NavLink>
           </li>
