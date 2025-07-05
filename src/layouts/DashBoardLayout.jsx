@@ -21,8 +21,19 @@ import UseAuth from "../hooks/UseAuth/UseAuth";
 
 // 15.0  now my requirement is create a dashboard so created a DashBoardLayout
 const DashBoardLayout = () => {
-  const { tracking_id } = useParams();
-  console.log(tracking_id);
+  //  40.10
+  const { user } = UseAuth();
+  const axiosSecure = useAxiosSecure();
+  const { data: parcels = [] } = useQuery({
+    queryKey: ["myParcels", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/parcels?email=${user.email}`);
+      return res.data;
+    },
+  });
+
+  const latestParcel = parcels[parcels.length - 1];
 
   // 31.3 check that the role is coming or not
   const { role, isLoading } = useUserRole();
@@ -90,14 +101,18 @@ const DashBoardLayout = () => {
               <FaHistory /> Payment History
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              to={`/dashboard/track/${tracking_id}`}
-              className="flex items-center gap-2"
-            >
-              <FaMapMarkerAlt /> Track Your Parcel
-            </NavLink>
-          </li>
+          {/* 40.11 */}
+          {latestParcel?.tracking_id && (
+            <li>
+              <NavLink
+                to={`/dashboard/track/${latestParcel.tracking_id}`}
+                className="flex items-center gap-2"
+              >
+                <FaMapMarkerAlt /> Track Your Parcel
+              </NavLink>
+            </li>
+          )}
+
           <li>
             <NavLink to="/dashboard/update" className="flex items-center gap-2">
               <FaUserEdit /> Update Your Profile
