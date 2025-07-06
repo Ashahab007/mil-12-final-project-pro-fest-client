@@ -147,10 +147,9 @@ const PaymentForm = () => {
       onSubmit={handleSubmit}
       className="space-y-4 bg-white rounded-xl p-6 shadow-md w-full max-w-md mx-auto"
     >
-      <CardElement className="p-2 border rounded">
-        {/* 21.11.1 disabled if stripe is not present */}
-      </CardElement>
+      <CardElement className="p-2 border rounded"></CardElement>
       <button
+        //  21.11.1 disabled if stripe is not present
         className="btn btn-primary w-full"
         type="submit"
         disabled={!stripe}
