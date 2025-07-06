@@ -139,6 +139,7 @@ const DashBoardLayout = () => {
                   <FaCheckCircle /> Completed Deliveries
                 </NavLink>
               </li>
+              {/* 39.2 */}
               <li>
                 <NavLink
                   to="/dashboard/my-earnings"

@@ -4,6 +4,7 @@ import UseAuth from "../../../hooks/UseAuth/UseAuth";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 
+// 38.5
 const CompletedDeliveries = () => {
   const { user } = UseAuth();
   const axiosSecure = useAxiosSecure();

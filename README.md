@@ -77,3 +77,11 @@
 35.0 my requirement is assign the parcel to the specific region rider and update the delivery status sending the rider name, email, id to the parcelsCollection
 
 36.0 my requirement is only rider can see his pending deliveries and protect the route as like as AdminRoutes
+
+37.0 my requirement is verify the rider as a like as verifyAdmin that one rider cannot see the other riders data
+
+38.0 my requirement is rider can see the completed deliveries and cashout the money
+
+39.0 my requirement is rider can see his total earning, cashed out amount, pending cashout from completed Deliveries
+
+40.0 my requirement is tracking a specific parcel by user by tracking id so created a backend helper function

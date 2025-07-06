@@ -7,6 +7,9 @@ const MyEarning = () => {
   const { user } = UseAuth();
   const axiosSecure = useAxiosSecure();
 
+  // 39.0 my requirement is rider can see his total earning, cashed out amount, pending cashout from completed Deliveries
+
+  // 39.3
   const {
     data: deliveries = [],
     isLoading,
@@ -28,8 +31,6 @@ const MyEarning = () => {
     return Math.round(d.totalCost * percentage);
   };
 
-  const todayStr = format(new Date(), "yyyy-MM-dd");
-
   const totalEarning = deliveries.reduce(
     (sum, d) => sum + calculateEarning(d),
     0
@@ -41,6 +42,7 @@ const MyEarning = () => {
     0
   );
 
+  const todayStr = format(new Date(), "yyyy-MM-dd");
   const todaysCashedOutDeliveries = cashedOutDeliveries.filter(
     (d) =>
       d.cashed_out_date &&
