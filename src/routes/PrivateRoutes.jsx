@@ -1,6 +1,7 @@
 import React from "react";
 import UseAuth from "../hooks/UseAuth/UseAuth";
 import { Navigate, useLocation } from "react-router";
+import Loading from "../components/Loading/Loading";
 
 //20.0 Our requirement is redirect the user where user clicked a private route before login (not working)
 
@@ -17,7 +18,7 @@ const PrivateRoutes = ({ children }) => {
 
   // 9.2 show loading
   if (loading) {
-    return <span className="loading loading-spinner loading-xl"></span>;
+    return <Loading></Loading>;
   }
 
   // 9.3 if user is not present it will redirect to login page

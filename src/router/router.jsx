@@ -23,6 +23,7 @@ import RiderRoutes from "../routes/RiderRoutes";
 import PendingDeliveries from "../pages/DashBoard/PendingDeliveries/PendingDeliveries";
 import CompletedDeliveries from "../pages/DashBoard/CompletedDeliveries/CompletedDeliveries";
 import MyEarning from "../pages/DashBoard/MyEarning/MyEarning";
+import DashBoardHome from "../pages/DashBoard/DashBoardHome/DashBoardHome";
 
 // 31.8 but problem is if u  paste the url "http://localhost:3000/riders/pending" or any of the AdminRoutes url u can see the data so to prevent this we will use verifyFBToken from the sever side
 export const router = createBrowserRouter([
@@ -92,6 +93,8 @@ export const router = createBrowserRouter([
     ),
     // 15.5 set the children MyParcel
     children: [
+      // 41.1 by default when user is going to dashboard it will show the DashBoardHome using index: true
+      { index: true, Component: DashBoardHome },
       { path: "myParcel", Component: MyParcel },
       // 21.6.1 created a route
       { path: "payment/:parcelId", Component: Payment },

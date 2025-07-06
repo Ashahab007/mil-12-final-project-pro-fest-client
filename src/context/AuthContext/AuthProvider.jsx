@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
   // 8.7 took user state
   const [user, setUser] = useState(null);
   // 8.10 took state for loading by default false
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // 8.1 create createUserWithEmailAndPassword
   const createUser = (email, password) => {
@@ -52,6 +52,7 @@ const AuthProvider = ({ children }) => {
 
   // 22.7 create update user from firebase doc
   const updateUserProfile = (profileInfo) => {
+    setLoading(true);
     return updateProfile(auth.currentUser, profileInfo);
   };
 
