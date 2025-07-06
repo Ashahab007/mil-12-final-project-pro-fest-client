@@ -58,7 +58,10 @@ const BangladeshMap = ({ services }) => {
           )}
 
           {services.map((service, idx) => (
-            <Marker position={[service?.latitude, service?.longitude]}>
+            <Marker
+              key={idx}
+              position={[service?.latitude, service?.longitude]}
+            >
               <Popup>
                 <h3 className="font-bold">{service.district}</h3>
                 <p className="text-sm">
