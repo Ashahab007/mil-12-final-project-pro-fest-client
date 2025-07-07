@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import UseAuth from "../../../hooks/UseAuth/UseAuth";
 import axios from "axios";
 import useAxios from "../../../hooks/useAxios";
+import { Link } from "react-router";
 
 // 5.0 My requirement is applying react hook form in Register section
 // 6.0 My requirement is show error in the form if validation is failed
@@ -184,6 +185,13 @@ const Register = () => {
           <button type="submit" className="btn btn-neutral mt-4">
             Register
           </button>
+          <p>
+            Already have Account?{" "}
+            <Link to="/login" className="hover:underline">
+              {" "}
+              Login
+            </Link>
+          </p>
         </fieldset>
       </form>
     </div>

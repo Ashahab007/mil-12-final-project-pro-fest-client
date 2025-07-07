@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import UseAuth from "../../../hooks/UseAuth/UseAuth";
-import { useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 
 // 3.1 created a login component
 const Login = () => {
@@ -64,6 +64,12 @@ const Login = () => {
             <a className="link link-hover">Forgot password?</a>
           </div>
           <button className="btn btn-neutral mt-4">Login</button>
+          <p>
+            Don't have account?{" "}
+            <Link to={"/register"} className="hover:underline">
+              Register
+            </Link>
+          </p>
         </fieldset>
       </form>
       {/* 20.5 same navigation for social login */}
