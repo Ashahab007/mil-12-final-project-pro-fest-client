@@ -85,3 +85,9 @@
 39.0 my requirement is rider can see his total earning, cashed out amount, pending cashout from completed Deliveries
 
 40.0 my requirement is tracking a specific parcel by user by tracking id so created a backend helper function
+
+41.0 my requirement is in DashBoard create a DashBoardHome where we will show the dashboard role wise for admin, user, rider
+
+42.0 my requirement is in admin dashboard i want show the delivery status in the dashboard using aggregate also show a pie Chart
+
+43.0 Deploy process is in video module 70, 70.8 and 70.9
